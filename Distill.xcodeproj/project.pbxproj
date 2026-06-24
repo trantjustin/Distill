@@ -1,0 +1,787 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 70;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1000001 /* DistillApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001 /* DistillApp.swift */; };
+		A1000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002 /* ContentView.swift */; };
+		A1000003 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003 /* LibraryView.swift */; };
+		A1000004 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000004 /* AddBookView.swift */; };
+		A1000005 /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000005 /* BookDetailView.swift */; };
+		A1000006 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000006 /* ReviewView.swift */; };
+		A1000007 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000007 /* SettingsView.swift */; };
+		A1000008 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000008 /* Book.swift */; };
+		A1000009 /* Learning.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000009 /* Learning.swift */; };
+		A1000011 /* CoverColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011 /* CoverColors.swift */; };
+		A1000012 /* WidgetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012 /* WidgetDataManager.swift */; };
+		A1000013 /* OpenLibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000013 /* OpenLibraryService.swift */; };
+		A1000014 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000014 /* BarcodeScannerView.swift */; };
+		A1000020 /* DistillWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000020 /* DistillWidget.swift */; };
+		A1000021 /* WidgetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012 /* WidgetDataManager.swift */; };
+		A1000030 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2000030 /* WidgetKit.framework */; };
+		A1000031 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2000031 /* SwiftUI.framework */; };
+		A1000032 /* DistillWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3000002 /* DistillWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A1000040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000040 /* Assets.xcassets */; };
+		A1000050 /* BookCoverService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000050 /* BookCoverService.swift */; };
+		D92AE0A42FEB453C000A32A5 /* DistillShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D92AE09A2FEB453C000A32A5 /* DistillShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D92AE0AA2FEB482A000A32A5 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92AE0A92FEB482A000A32A5 /* AIService.swift */; };
+		D9786BE32FEBFE47009829E3 /* TelemetryClient in Frameworks */ = {isa = PBXBuildFile; productRef = D9786BE22FEBFE47009829E3 /* TelemetryClient */; };
+		D9786BE52FEBFE47009829E3 /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = D9786BE42FEBFE47009829E3 /* TelemetryDeck */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A4000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9000002;
+			remoteInfo = DistillWidget;
+		};
+		D92AE0A22FEB453C000A32A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D92AE0992FEB453C000A32A5;
+			remoteInfo = DistillShareExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A6000001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D92AE0A42FEB453C000A32A5 /* DistillShareExtension.appex in Embed Foundation Extensions */,
+				A1000032 /* DistillWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A2000001 /* DistillApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistillApp.swift; sourceTree = "<group>"; };
+		A2000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A2000003 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		A2000004 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
+		A2000005 /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
+		A2000006 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		A2000007 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A2000008 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		A2000009 /* Learning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Learning.swift; sourceTree = "<group>"; };
+		A2000011 /* CoverColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverColors.swift; sourceTree = "<group>"; };
+		A2000012 /* WidgetDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataManager.swift; sourceTree = "<group>"; };
+		A2000013 /* OpenLibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLibraryService.swift; sourceTree = "<group>"; };
+		A2000014 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
+		A2000020 /* DistillWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistillWidget.swift; sourceTree = "<group>"; };
+		A2000030 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A2000031 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		A2000040 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A2000050 /* BookCoverService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverService.swift; sourceTree = "<group>"; };
+		A3000002 /* DistillWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DistillWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3000010 /* Distill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Distill.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D92AE09A2FEB453C000A32A5 /* DistillShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DistillShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D92AE0A92FEB482A000A32A5 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AIService.swift; path = Distill/Sources/Services/AIService.swift; sourceTree = "<group>"; };
+		D9CAE2052FEB42A100BD482C /* DistillWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = DistillWidget.entitlements; path = DistillWidget/DistillWidget.entitlements; sourceTree = "<group>"; };
+		D9CAE2072FEB42F200BD482C /* Distill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Distill.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D92AE0A52FEB453C000A32A5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D92AE0992FEB453C000A32A5 /* DistillShareExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D92AE09B2FEB453C000A32A5 /* DistillShareExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D92AE0A52FEB453C000A32A5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = DistillShareExtension; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A7000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9786BE32FEBFE47009829E3 /* TelemetryClient in Frameworks */,
+				D9786BE52FEBFE47009829E3 /* TelemetryDeck in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000030 /* WidgetKit.framework in Frameworks */,
+				A1000031 /* SwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D92AE0972FEB453C000A32A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A8000001 = {
+			isa = PBXGroup;
+			children = (
+				D92AE0A92FEB482A000A32A5 /* AIService.swift */,
+				D9CAE2052FEB42A100BD482C /* DistillWidget.entitlements */,
+				A8000010 /* Distill */,
+				A8000020 /* DistillWidget/Sources */,
+				A8000030 /* Shared */,
+				D92AE09B2FEB453C000A32A5 /* DistillShareExtension */,
+				A8000040 /* Frameworks */,
+				A8000050 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A8000010 /* Distill */ = {
+			isa = PBXGroup;
+			children = (
+				D9CAE2072FEB42F200BD482C /* Distill.entitlements */,
+				A2000040 /* Assets.xcassets */,
+				A2000001 /* DistillApp.swift */,
+				A8000011 /* Sources/Views */,
+				A8000012 /* Sources/Models */,
+				A8000013 /* Sources/Services */,
+				A8000014 /* Sources/Utilities */,
+			);
+			path = Distill;
+			sourceTree = "<group>";
+		};
+		A8000011 /* Sources/Views */ = {
+			isa = PBXGroup;
+			children = (
+				A2000002 /* ContentView.swift */,
+				A2000003 /* LibraryView.swift */,
+				A2000004 /* AddBookView.swift */,
+				A2000005 /* BookDetailView.swift */,
+				A2000006 /* ReviewView.swift */,
+				A2000007 /* SettingsView.swift */,
+				A2000014 /* BarcodeScannerView.swift */,
+			);
+			path = Sources/Views;
+			sourceTree = "<group>";
+		};
+		A8000012 /* Sources/Models */ = {
+			isa = PBXGroup;
+			children = (
+				A2000008 /* Book.swift */,
+				A2000009 /* Learning.swift */,
+			);
+			path = Sources/Models;
+			sourceTree = "<group>";
+		};
+		A8000013 /* Sources/Services */ = {
+			isa = PBXGroup;
+			children = (
+				A2000013 /* OpenLibraryService.swift */,
+				A2000050 /* BookCoverService.swift */,
+			);
+			path = Sources/Services;
+			sourceTree = "<group>";
+		};
+		A8000014 /* Sources/Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A2000011 /* CoverColors.swift */,
+			);
+			path = Sources/Utilities;
+			sourceTree = "<group>";
+		};
+		A8000020 /* DistillWidget/Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A2000020 /* DistillWidget.swift */,
+			);
+			path = DistillWidget/Sources;
+			sourceTree = "<group>";
+		};
+		A8000030 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A2000012 /* WidgetDataManager.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A8000040 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A2000030 /* WidgetKit.framework */,
+				A2000031 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A8000050 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3000010 /* Distill.app */,
+				A3000002 /* DistillWidget.appex */,
+				D92AE09A2FEB453C000A32A5 /* DistillShareExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A9000001 /* Distill */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000001 /* Build configuration list for PBXNativeTarget "Distill" */;
+			buildPhases = (
+				A0000001 /* Resources */,
+				AB000001 /* Sources */,
+				A7000001 /* Frameworks */,
+				A6000001 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AC000001 /* PBXTargetDependency */,
+				D92AE0A32FEB453C000A32A5 /* PBXTargetDependency */,
+			);
+			name = Distill;
+			productName = Distill;
+			productReference = A3000010 /* Distill.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9000002 /* DistillWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000002 /* Build configuration list for PBXNativeTarget "DistillWidget" */;
+			buildPhases = (
+				AB000002 /* Sources */,
+				A7000002 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DistillWidget;
+			productName = DistillWidget;
+			productReference = A3000002 /* DistillWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D92AE0992FEB453C000A32A5 /* DistillShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D92AE0A62FEB453C000A32A5 /* Build configuration list for PBXNativeTarget "DistillShareExtension" */;
+			buildPhases = (
+				D92AE0962FEB453C000A32A5 /* Sources */,
+				D92AE0972FEB453C000A32A5 /* Frameworks */,
+				D92AE0982FEB453C000A32A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D92AE09B2FEB453C000A32A5 /* DistillShareExtension */,
+			);
+			name = DistillShareExtension;
+			packageProductDependencies = (
+			);
+			productName = DistillShareExtension;
+			productReference = D92AE09A2FEB453C000A32A5 /* DistillShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2650;
+				LastUpgradeCheck = 2650;
+				TargetAttributes = {
+					A9000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					A9000002 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					D92AE0992FEB453C000A32A5 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+				};
+			};
+			buildConfigurationList = AA000000 /* Build configuration list for PBXProject "Distill" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"Base 2",
+				"base 2",
+			);
+			mainGroup = A8000001;
+			packageReferences = (
+				D9786BE12FEBFE47009829E3 /* XCRemoteSwiftPackageReference "SwiftSDK" */,
+			);
+			productRefGroup = A8000050 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A9000001 /* Distill */,
+				A9000002 /* DistillWidget */,
+				D92AE0992FEB453C000A32A5 /* DistillShareExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A0000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000040 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D92AE0982FEB453C000A32A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001 /* DistillApp.swift in Sources */,
+				A1000002 /* ContentView.swift in Sources */,
+				A1000003 /* LibraryView.swift in Sources */,
+				A1000004 /* AddBookView.swift in Sources */,
+				A1000005 /* BookDetailView.swift in Sources */,
+				A1000006 /* ReviewView.swift in Sources */,
+				A1000007 /* SettingsView.swift in Sources */,
+				A1000008 /* Book.swift in Sources */,
+				A1000009 /* Learning.swift in Sources */,
+				A1000013 /* OpenLibraryService.swift in Sources */,
+				A1000014 /* BarcodeScannerView.swift in Sources */,
+				A1000011 /* CoverColors.swift in Sources */,
+				A1000012 /* WidgetDataManager.swift in Sources */,
+				D92AE0AA2FEB482A000A32A5 /* AIService.swift in Sources */,
+				A1000050 /* BookCoverService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000020 /* DistillWidget.swift in Sources */,
+				A1000021 /* WidgetDataManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D92AE0962FEB453C000A32A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AC000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9000002 /* DistillWidget */;
+			targetProxy = A4000001 /* PBXContainerItemProxy */;
+		};
+		D92AE0A32FEB453C000A32A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D92AE0992FEB453C000A32A5 /* DistillShareExtension */;
+			targetProxy = D92AE0A22FEB453C000A32A5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AD000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5L4KT67Y36;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AD000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5L4KT67Y36;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AD000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
+				INFOPLIST_KEY_NSAppTransportSecurity = "<dict><key>NSAllowsArbitraryLoads</key><false/></dict>";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Distill uses the camera to scan book barcodes.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Distill uses the camera to scan book barcodes.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AD000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;
+				INFOPLIST_KEY_NSExtension = "<dict><key>NSExtensionPointIdentifier</key><string>com.apple.widgetkit-extension</string></dict>";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;
+				INFOPLIST_KEY_NSExtension = "<dict><key>NSExtensionPointIdentifier</key><string>com.apple.widgetkit-extension</string></dict>";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D92AE0A72FEB453C000A32A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DistillShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.DistillShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D92AE0A82FEB453C000A32A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DistillShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.DistillShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA000000 /* Build configuration list for PBXProject "Distill" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD000001 /* Debug */,
+				AD000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000001 /* Build configuration list for PBXNativeTarget "Distill" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD000003 /* Debug */,
+				AD000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000002 /* Build configuration list for PBXNativeTarget "DistillWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD000005 /* Debug */,
+				AD000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D92AE0A62FEB453C000A32A5 /* Build configuration list for PBXNativeTarget "DistillShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D92AE0A72FEB453C000A32A5 /* Debug */,
+				D92AE0A82FEB453C000A32A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D9786BE12FEBFE47009829E3 /* XCRemoteSwiftPackageReference "SwiftSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TelemetryDeck/SwiftSDK";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.14.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D9786BE22FEBFE47009829E3 /* TelemetryClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9786BE12FEBFE47009829E3 /* XCRemoteSwiftPackageReference "SwiftSDK" */;
+			productName = TelemetryClient;
+		};
+		D9786BE42FEBFE47009829E3 /* TelemetryDeck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9786BE12FEBFE47009829E3 /* XCRemoteSwiftPackageReference "SwiftSDK" */;
+			productName = TelemetryDeck;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A5000001 /* Project object */;
+}

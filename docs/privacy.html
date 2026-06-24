@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Distill</title>
+  <meta name="description" content="Privacy policy for Distill. Your books and learnings stay on your device. Distill collects no personal data.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="wordmark"><a href="index.html" style="color:inherit;text-decoration:none;">Distill<span style="color:#f59e0b;">.</span></a></div>
+
+    <h1>Privacy Policy</h1>
+    <p class="muted" style="text-align:center; margin-bottom:24px;">Effective June 24, 2026</p>
+
+    <div class="panel">
+      <h2>The short version</h2>
+      <p><strong>Distill does not collect, store, or share your personal data.</strong> Your books, learnings, and API keys live entirely on your device. To understand how the app is used in aggregate, Distill sends a small number of anonymized usage signals to TelemetryDeck — nothing that identifies you or your content.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Your data stays on your device</h2>
+      <p>All books, learnings, and review history are stored locally using SwiftData. Distill has no server, no account system, and no cloud sync. Deleting the app removes all data.</p>
+
+      <h2>API keys</h2>
+      <p>API keys you enter in Settings are stored in your device's local UserDefaults. They are never transmitted to Distill or any third party — they are sent only to the AI provider you have chosen (OpenAI, Anthropic, Google, or Perplexity) when you request learnings. Each provider's own privacy policy governs how they handle that request.</p>
+
+      <h2>Book cover art</h2>
+      <p>When you add a book, Distill queries the Open Library search API (<a href="https://openlibrary.org" rel="noopener">openlibrary.org</a>) to retrieve cover art. This request includes the book title and author you entered — no account or identifier is sent. Open Library is operated by the Internet Archive under its own privacy policy.</p>
+
+      <h2>AI-generated learnings</h2>
+      <p>When you generate learnings, the book title and author are sent to your chosen AI provider via their public API. No other data is included. Distill does not see, store, or forward this request.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Anonymized usage analytics</h2>
+      <p>Distill uses <a href="https://telemetrydeck.com" rel="noopener">TelemetryDeck</a> to count anonymous events. TelemetryDeck hashes device identifiers before they leave your device, so the data cannot be tied to you. The complete list of events reported:</p>
+      <ul>
+        <li><strong>App launched</strong></li>
+        <li><strong>Book added</strong> — with the AI provider used and how the book was found (search, barcode, or manual)</li>
+        <li><strong>Book deleted</strong></li>
+        <li><strong>Review session started</strong> — with the total number of learnings available</li>
+        <li><strong>Learning marked as known</strong></li>
+        <li><strong>Review session completed</strong> — with the number of learnings reviewed</li>
+      </ul>
+      <p>Each event includes only basic technical context (device model, OS version, app version). No book titles, authors, learnings, or API keys are ever included in analytics. You can read more in <a href="https://telemetrydeck.com/privacy/" rel="noopener">TelemetryDeck's privacy policy</a>.</p>
+
+      <h2>App Store privacy label</h2>
+      <p>In App Store terms, Distill collects <strong>Product Interaction</strong> data (the anonymous usage events above) that is <strong>not linked to your identity</strong> and is <strong>not used for tracking</strong>. No other data types are collected.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Children</h2>
+      <p>Distill is suitable for all ages. The app collects no personal data from anyone, including children.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>If a future update changes how data is handled, this page will be updated before that version ships and the effective date above will change.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy? Email <a href="mailto:justin.trant@me.com">justin.trant@me.com</a>.</p>
+    </div>
+
+    <footer>
+      <a href="index.html">Home</a> ·
+      <a href="support.html">Support</a>
+      <p style="margin-top:12px;">© 2026 Justin Trant</p>
+    </footer>
+  </div>
+</body>
+</html>

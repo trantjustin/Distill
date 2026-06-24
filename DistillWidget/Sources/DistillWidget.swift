@@ -1,0 +1,364 @@
+import WidgetKit
+import SwiftUI
+import AppIntents
+import UIKit
+
+// MARK: - Configuration Intent
+
+enum WidgetColorTheme: String, AppEnum {
+    case indigo   = "indigo"
+    case midnight = "midnight"
+    case sunset   = "sunset"
+    case forest   = "forest"
+    case rose     = "rose"
+
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Color Theme"
+    static var caseDisplayRepresentations: [WidgetColorTheme: DisplayRepresentation] = [
+        .indigo:   DisplayRepresentation(title: "Indigo"),
+        .midnight: DisplayRepresentation(title: "Midnight"),
+        .sunset:   DisplayRepresentation(title: "Sunset"),
+        .forest:   DisplayRepresentation(title: "Forest"),
+        .rose:     DisplayRepresentation(title: "Rose"),
+    ]
+
+    var colors: [Color] {
+        switch self {
+        case .indigo:   return [.indigo, Color(red: 0.5, green: 0.2, blue: 0.9)]
+        case .midnight: return [Color(red: 0.05, green: 0.05, blue: 0.2), Color(red: 0.1, green: 0.1, blue: 0.4)]
+        case .sunset:   return [Color(red: 0.95, green: 0.4, blue: 0.2), Color(red: 0.9, green: 0.2, blue: 0.5)]
+        case .forest:   return [Color(red: 0.1, green: 0.4, blue: 0.2), Color(red: 0.2, green: 0.6, blue: 0.3)]
+        case .rose:     return [Color(red: 0.8, green: 0.2, blue: 0.4), Color(red: 0.6, green: 0.1, blue: 0.5)]
+        }
+    }
+
+    var gradient: LinearGradient {
+        LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+
+    var accentColor: Color { colors[0] }
+}
+
+enum WidgetRefreshRate: String, AppEnum {
+    case frequent = "frequent"
+    case twiceDaily = "twiceDaily"
+    case daily = "daily"
+
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Refresh Rate"
+    static var caseDisplayRepresentations: [WidgetRefreshRate: DisplayRepresentation] = [
+        .frequent:   DisplayRepresentation(title: "Every 8 Hours"),
+        .twiceDaily: DisplayRepresentation(title: "Twice Daily"),
+        .daily:      DisplayRepresentation(title: "Daily"),
+    ]
+
+    var interval: TimeInterval {
+        switch self {
+        case .frequent:   return 8 * 60 * 60
+        case .twiceDaily: return 12 * 60 * 60
+        case .daily:      return 24 * 60 * 60
+        }
+    }
+}
+
+struct DistillWidgetIntent: WidgetConfigurationIntent {
+    static var title: LocalizedStringResource = "Distill Widget"
+    static var description = IntentDescription("Customize your Distill widget.")
+
+    @Parameter(title: "Color Theme", default: .indigo)
+    var colorTheme: WidgetColorTheme
+
+    @Parameter(title: "Refresh Rate", default: .frequent)
+    var refreshRate: WidgetRefreshRate
+
+    @Parameter(title: "Show Book Title", default: true)
+    var showBookTitle: Bool
+
+    @Parameter(title: "Show Author", default: true)
+    var showAuthor: Bool
+}
+
+// MARK: - Timeline
+
+struct LearningEntry: TimelineEntry {
+    let date: Date
+    let learning: WidgetLearning?
+    let configuration: DistillWidgetIntent
+}
+
+struct LearningProvider: AppIntentTimelineProvider {
+    func placeholder(in context: Context) -> LearningEntry {
+        LearningEntry(
+            date: Date(),
+            learning: WidgetLearning(
+                text: "Habits are the compound interest of self-improvement.",
+                bookTitle: "Atomic Habits",
+                bookAuthor: "James Clear"
+            ),
+            configuration: DistillWidgetIntent()
+        )
+    }
+
+    func snapshot(for configuration: DistillWidgetIntent, in context: Context) async -> LearningEntry {
+        let learning = WidgetDataManager.loadTodayLearning()
+        return LearningEntry(date: Date(), learning: learning, configuration: configuration)
+    }
+
+    func timeline(for configuration: DistillWidgetIntent, in context: Context) async -> Timeline<LearningEntry> {
+        let learnings = WidgetDataManager.loadLearnings()
+        var entries: [LearningEntry] = []
+        var date = Date()
+        let interval = configuration.refreshRate.interval
+
+        for i in 0..<5 {
+            let learning: WidgetLearning? = learnings.isEmpty ? nil : learnings[i % learnings.count]
+            entries.append(LearningEntry(date: date, learning: learning, configuration: configuration))
+            date = date.addingTimeInterval(interval)
+        }
+
+        return Timeline(entries: entries, policy: .atEnd)
+    }
+}
+
+// MARK: - Shared Components
+
+struct BookCoverThumbnail: View {
+    let imageData: Data?
+    let width: CGFloat
+    let height: CGFloat
+
+    var uiImage: UIImage? {
+        imageData.flatMap { UIImage(data: $0) }
+    }
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 6)
+            .fill(.white.opacity(0.12))
+            .frame(width: width, height: height)
+            .overlay {
+                if let image = uiImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                } else {
+                    Image(systemName: "book.closed.fill")
+                        .font(.title3)
+                        .foregroundStyle(.white.opacity(0.7))
+                }
+            }
+            .frame(width: width, height: height)
+            .clipped()
+    }
+}
+
+// MARK: - Widget Views
+
+struct DistillWidgetEntryView: View {
+    var entry: LearningEntry
+    @Environment(\.widgetFamily) var family
+
+    var theme: WidgetColorTheme { entry.configuration.colorTheme }
+    var showTitle: Bool { entry.configuration.showBookTitle }
+    var showAuthor: Bool { entry.configuration.showAuthor }
+
+    var body: some View {
+        switch family {
+        case .systemSmall:  SmallWidgetView(entry: entry, theme: theme, showTitle: showTitle)
+        case .systemMedium: MediumWidgetView(entry: entry, theme: theme, showTitle: showTitle, showAuthor: showAuthor)
+        case .systemLarge:  LargeWidgetView(entry: entry, theme: theme, showTitle: showTitle, showAuthor: showAuthor)
+        default:            MediumWidgetView(entry: entry, theme: theme, showTitle: showTitle, showAuthor: showAuthor)
+        }
+    }
+}
+
+struct SmallWidgetView: View {
+    let entry: LearningEntry
+    let theme: WidgetColorTheme
+    let showTitle: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            if let learning = entry.learning {
+                Text(learning.text)
+                    .font(.system(.caption, design: .serif).weight(.medium))
+                    .foregroundStyle(.white)
+                    .lineLimit(6)
+                    .minimumScaleFactor(0.78)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+                if showTitle {
+                    attributionText(learning: learning)
+                        .padding(.top, 6)
+                }
+            } else {
+                Text("Add a book in Distill to see learnings here.")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.65))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .containerBackground(for: .widget) {
+            widgetBackground(imageData: entry.learning?.coverImageData, dominantHex: entry.learning?.dominantColorHex, gradient: theme.gradient)
+        }
+    }
+
+    private func attributionText(learning: WidgetLearning) -> some View {
+        Text(learning.bookTitle)
+            .font(.system(size: 9, weight: .medium))
+            .foregroundStyle(.white.opacity(0.55))
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+    }
+}
+
+struct MediumWidgetView: View {
+    let entry: LearningEntry
+    let theme: WidgetColorTheme
+    let showTitle: Bool
+    let showAuthor: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            if let learning = entry.learning {
+                Text(learning.text)
+                    .font(.system(.subheadline, design: .serif).weight(.medium))
+                    .foregroundStyle(.white)
+                    .lineLimit(5)
+                    .minimumScaleFactor(0.82)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+                attributionRow(learning: learning)
+                    .padding(.top, 8)
+            } else {
+                Text("Open Distill and add a book to see learnings here.")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.65))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .containerBackground(for: .widget) {
+            widgetBackground(imageData: entry.learning?.coverImageData, dominantHex: entry.learning?.dominantColorHex, gradient: theme.gradient)
+        }
+    }
+
+    private func attributionRow(learning: WidgetLearning) -> some View {
+        let text: String = {
+            switch (showTitle, showAuthor) {
+            case (true, true):   return "\(learning.bookTitle)  |  \(learning.bookAuthor)"
+            case (true, false):  return learning.bookTitle
+            case (false, true):  return learning.bookAuthor
+            case (false, false): return ""
+            }
+        }()
+        return Text(text)
+            .font(.system(size: 10, weight: .medium))
+            .foregroundStyle(.white.opacity(0.5))
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+struct LargeWidgetView: View {
+    let entry: LearningEntry
+    let theme: WidgetColorTheme
+    let showTitle: Bool
+    let showAuthor: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            if let learning = entry.learning {
+                Text("\u{201C}")
+                    .font(.system(size: 48, weight: .bold))
+                    .foregroundStyle(.white.opacity(0.18))
+                    .padding(.bottom, -20)
+
+                Text(learning.text)
+                    .font(.system(.title3, design: .serif).weight(.semibold))
+                    .foregroundStyle(.white)
+                    .lineSpacing(5)
+                    .lineLimit(9)
+                    .minimumScaleFactor(0.75)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+                if showTitle || showAuthor {
+                    let attribution: String = {
+                        switch (showTitle, showAuthor) {
+                        case (true, true):   return "\(learning.bookTitle)  |  \(learning.bookAuthor)"
+                        case (true, false):  return learning.bookTitle
+                        case (false, true):  return learning.bookAuthor
+                        default:             return ""
+                        }
+                    }()
+                    Text(attribution)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .padding(.top, 10)
+                }
+            } else {
+                Text("Add books in Distill to see core learnings here.")
+                    .font(.title3)
+                    .foregroundStyle(.white.opacity(0.65))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .containerBackground(for: .widget) {
+            widgetBackground(imageData: entry.learning?.coverImageData, dominantHex: entry.learning?.dominantColorHex, gradient: theme.gradient)
+        }
+    }
+}
+
+@ViewBuilder
+func widgetBackground(imageData: Data?, dominantHex: String?, gradient: LinearGradient) -> some View {
+    if let hex = dominantHex, let color = Color(hex: hex) {
+        LinearGradient(
+            colors: [color.darkened(by: 0.25), color],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    } else {
+        gradient
+    }
+}
+
+extension Color {
+    init?(hex: String) {
+        let h = hex.hasPrefix("#") ? String(hex.dropFirst()) : hex
+        guard h.count == 6, let val = UInt64(h, radix: 16) else { return nil }
+        self.init(
+            red: Double((val >> 16) & 0xFF) / 255,
+            green: Double((val >> 8) & 0xFF) / 255,
+            blue: Double(val & 0xFF) / 255
+        )
+    }
+
+    func darkened(by amount: Double) -> Color {
+        let ui = UIColor(self)
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        ui.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+        return Color(hue: h, saturation: min(s + 0.1, 1), brightness: max(b - amount, 0))
+    }
+}
+
+// MARK: - Widget
+
+@main
+struct DistillWidget: Widget {
+    let kind: String = "DistillWidget"
+
+    var body: some WidgetConfiguration {
+        AppIntentConfiguration(kind: kind, intent: DistillWidgetIntent.self, provider: LearningProvider()) { entry in
+            DistillWidgetEntryView(entry: entry)
+        }
+        .configurationDisplayName("Distill")
+        .description("See a core learning from your books.")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+    }
+}

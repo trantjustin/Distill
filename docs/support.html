@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — Distill</title>
+  <meta name="description" content="Support and FAQ for Distill, the AI-powered book learnings app for iPhone.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="wordmark"><a href="index.html" style="color:inherit;text-decoration:none;">Distill<span style="color:#f59e0b;">.</span></a></div>
+
+    <h1>Support</h1>
+
+    <div class="panel">
+      <h2>Contact</h2>
+      <p>Questions, bug reports, or feature requests? Email <a href="mailto:justin.trant@me.com">justin.trant@me.com</a> and include your iOS version and a brief description of what happened. I read everything.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Frequently asked questions</h2>
+
+      <h2 style="font-size:1.05rem;">How do I add a book?</h2>
+      <p>Tap the <strong>+</strong> button in the Library tab. Search by title or author, scan the book's ISBN barcode, or type the details manually. Once you've selected a book, tap <strong>Generate with [Provider]</strong> to create your learnings.</p>
+
+      <h2 style="font-size:1.05rem;">Which AI provider should I use?</h2>
+      <p>All four providers (OpenAI, Claude, Gemini, Perplexity) produce good results. If you don't already have a preference, OpenAI's <strong>gpt-4o-mini</strong> and Google's <strong>gemini-2.5-flash</strong> both offer generous free tiers. Claude and Perplexity require a paid account.</p>
+
+      <h2 style="font-size:1.05rem;">Where do I get an API key?</h2>
+      <ul>
+        <li><strong>OpenAI:</strong> <a href="https://platform.openai.com" rel="noopener">platform.openai.com</a></li>
+        <li><strong>Claude:</strong> <a href="https://console.anthropic.com" rel="noopener">console.anthropic.com</a></li>
+        <li><strong>Gemini:</strong> <a href="https://aistudio.google.com" rel="noopener">aistudio.google.com</a></li>
+        <li><strong>Perplexity:</strong> <a href="https://docs.perplexity.ai" rel="noopener">docs.perplexity.ai</a></li>
+      </ul>
+
+      <h2 style="font-size:1.05rem;">My API key shows as invalid.</h2>
+      <p>Distill checks that your key has the right format (e.g. OpenAI keys start with <code>sk-</code>, Claude keys with <code>sk-ant-</code>). If the format looks right but you still get an error when generating, double-check that your key has credit available and hasn't expired in your provider's dashboard.</p>
+
+      <h2 style="font-size:1.05rem;">The widget isn't showing my books.</h2>
+      <p>After adding a book, the widget should update within a few seconds. If it doesn't, try removing and re-adding the widget. Make sure Distill has been opened at least once after adding the book — the widget reads from shared storage that is written when you generate learnings.</p>
+
+      <h2 style="font-size:1.05rem;">How do I customise the widget?</h2>
+      <p>Long-press the Distill widget on your home screen and tap <strong>Edit Widget</strong>. You can choose a colour theme (Indigo, Midnight, Sunset, Forest, or Rose), set how often the learning rotates, and toggle whether the book title and author are shown.</p>
+
+      <h2 style="font-size:1.05rem;">Can I delete a book?</h2>
+      <p>Yes — tap a book in your Library to open its detail view, then tap the trash icon in the top-right corner. The book and all its learnings are removed immediately.</p>
+
+      <h2 style="font-size:1.05rem;">Does Distill work offline?</h2>
+      <p>The library, review, and widget all work offline once books have been added. Generating new learnings and fetching book cover art require an internet connection.</p>
+    </div>
+
+    <footer>
+      <a href="index.html">Home</a> ·
+      <a href="privacy.html">Privacy Policy</a>
+      <p style="margin-top:12px;">© 2026 Justin Trant</p>
+    </footer>
+  </div>
+</body>
+</html>
