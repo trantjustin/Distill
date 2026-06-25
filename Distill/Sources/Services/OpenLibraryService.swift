@@ -13,7 +13,7 @@ struct OpenLibraryService {
     static let shared = OpenLibraryService()
 
     func search(query: String) async throws -> [BookSearchResult] {
-        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
+        let encoded = query.lowercased().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
         let url = URL(string: "https://openlibrary.org/search.json?q=\(encoded)&limit=10&fields=key,title,author_name,isbn,first_publish_year,cover_i")!
 
         let (data, _) = try await URLSession.shared.data(from: url)

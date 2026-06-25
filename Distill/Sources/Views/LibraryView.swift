@@ -1,5 +1,7 @@
 import SwiftUI
 import SwiftData
+import WidgetKit
+import UIKit
 
 struct LibraryView: View {
     @Environment(\.modelContext) private var context
@@ -29,7 +31,69 @@ struct LibraryView: View {
             .sheet(isPresented: $showingAddBook) {
                 AddBookView()
             }
+            .onAppear { syncWidget() }
         }
+    }
+
+    private func syncWidget() {
+        Task {
+            var coverCache: [String: (Data, String?)] = [:]
+            var widgetLearnings: [WidgetLearning] = []
+
+            for book in books {
+                let urlString = book.coverImageURL
+                var imageData: Data? = nil
+                var colorHex: String? = nil
+
+                if let urlString, let url = URL(string: urlString) {
+                    if let cached = coverCache[urlString] {
+                        imageData = cached.0; colorHex = cached.1
+                    } else if let (data, _) = try? await URLSession.shared.data(from: url) {
+                        let hex = dominantColorHex(from: data)
+                        coverCache[urlString] = (data, hex)
+                        imageData = data; colorHex = hex
+                    }
+                }
+                for learning in book.learnings {
+                    widgetLearnings.append(WidgetLearning(
+                        text: learning.text,
+                        bookTitle: learning.bookTitle,
+                        bookAuthor: learning.bookAuthor,
+                        coverImageURL: urlString,
+                        coverImageData: imageData,
+                        dominantColorHex: colorHex
+                    ))
+                }
+            }
+
+            WidgetDataManager.saveLearnings(widgetLearnings)
+            await MainActor.run { WidgetCenter.shared.reloadAllTimelines() }
+        }
+    }
+
+    private func dominantColorHex(from data: Data) -> String? {
+        guard let uiImage = UIImage(data: data), let cgImage = uiImage.cgImage else { return nil }
+        let size = 8
+        var pixels = [UInt8](repeating: 0, count: size * size * 4)
+        let cs = CGColorSpaceCreateDeviceRGB()
+        guard let ctx = CGContext(data: &pixels, width: size, height: size,
+                                   bitsPerComponent: 8, bytesPerRow: size * 4, space: cs,
+                                   bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return nil }
+        ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size, height: size))
+        var r = 0, g = 0, b = 0, count = 0
+        for i in 0..<(size * size) {
+            let base = i * 4
+            let pr = Int(pixels[base]), pg = Int(pixels[base+1]), pb = Int(pixels[base+2])
+            let brightness = (pr + pg + pb) / 3
+            guard brightness > 30 && brightness < 230 else { continue }
+            r += pr; g += pg; b += pb; count += 1
+        }
+        guard count > 0 else { return nil }
+        r /= count; g /= count; b /= count
+        let mx = Swift.max(r, g, b), mn = Swift.min(r, g, b)
+        let sat = mx > 0 ? Double(mx - mn) / Double(mx) : 0
+        if sat < 0.15 { r = r * 70/100; g = g * 70/100; b = b * 70/100 }
+        return String(format: "#%02X%02X%02X", r, g, b)
     }
 
     private var emptyState: some View {

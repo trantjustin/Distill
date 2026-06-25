@@ -69,6 +69,18 @@ struct SettingsView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    HStack {
+                        Image(systemName: "paintpalette.fill")
+                            .foregroundStyle(.indigo)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Customise the Widget")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                            Text("Long-press the widget → Edit Widget to change colour theme, refresh rate, and attribution")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                 }
 
                 Section("About") {

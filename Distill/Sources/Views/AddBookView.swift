@@ -102,6 +102,29 @@ struct AddBookView: View {
     }
 
     private var bookPreviewCard: some View {
+        Group {
+            if let urlString = selectedCoverURL, let url = URL(string: urlString) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 120, height: 160)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .shadow(radius: 12, y: 6)
+                    default:
+                        placeholderCard
+                    }
+                }
+            } else {
+                placeholderCard
+            }
+        }
+        .padding(.top, 8)
+    }
+
+    private var placeholderCard: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(CoverColors.color(for: selectedColor).gradient)
@@ -122,7 +145,6 @@ struct AddBookView: View {
                 }
             }
         }
-        .padding(.top, 8)
     }
 
     private var modeSelector: some View {
