@@ -33,7 +33,6 @@
 		A39A6BD6464339CB70851A0C /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096367A6D260BFF2098ABA60 /* SubscriptionManager.swift */; };
 		D92AE0A42FEB453C000A32A5 /* DistillShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D92AE09A2FEB453C000A32A5 /* DistillShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D92AE0AA2FEB482A000A32A5 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92AE0A92FEB482A000A32A5 /* AIService.swift */; };
-		D9593E063004FC6800207F87 /* Distill.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D9593E053004FC6800207F87 /* Distill.storekit */; };
 		D9786BE32FEBFE47009829E3 /* TelemetryClient in Frameworks */ = {isa = PBXBuildFile; productRef = D9786BE22FEBFE47009829E3 /* TelemetryClient */; };
 		D9786BE52FEBFE47009829E3 /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = D9786BE42FEBFE47009829E3 /* TelemetryDeck */; };
 		E2EF92A9046EE3CB3D0153FD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94F517DA9577B4DC18C9EA4 /* StoreKit.framework */; };
@@ -101,7 +100,6 @@
 		B94F517DA9577B4DC18C9EA4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D92AE09A2FEB453C000A32A5 /* DistillShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DistillShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92AE0A92FEB482A000A32A5 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AIService.swift; path = Distill/Sources/Services/AIService.swift; sourceTree = "<group>"; };
-		D9593E053004FC6800207F87 /* Distill.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Distill.storekit; path = Distill/Distill.storekit; sourceTree = "<group>"; };
 		D9CAE2052FEB42A100BD482C /* DistillWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = DistillWidget.entitlements; path = DistillWidget/DistillWidget.entitlements; sourceTree = "<group>"; };
 		D9CAE2072FEB42F200BD482C /* Distill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Distill.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,7 +151,6 @@
 		A8000001 = {
 			isa = PBXGroup;
 			children = (
-				D9593E053004FC6800207F87 /* Distill.storekit */,
 				D92AE0A92FEB482A000A32A5 /* AIService.swift */,
 				D9CAE2052FEB42A100BD482C /* DistillWidget.entitlements */,
 				A8000010 /* Distill */,
@@ -371,7 +368,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1000040 /* Assets.xcassets in Resources */,
-				D9593E063004FC6800207F87 /* Distill.storekit in Resources */,
 				F1DEE033A719839009C17F11 /* Distill.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,7 +567,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
@@ -586,7 +582,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -606,7 +602,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
@@ -620,7 +616,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -638,7 +634,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				GENERATE_INFOPLIST_FILE = NO;
 				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;
@@ -648,7 +644,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -667,7 +663,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				GENERATE_INFOPLIST_FILE = NO;
 				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;
@@ -677,7 +673,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -696,7 +692,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DistillShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
@@ -708,7 +704,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.DistillShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -730,7 +726,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DistillShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
@@ -742,7 +738,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill.DistillShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
