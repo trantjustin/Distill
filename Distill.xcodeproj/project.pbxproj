@@ -36,7 +36,6 @@
 		D9786BE32FEBFE47009829E3 /* TelemetryClient in Frameworks */ = {isa = PBXBuildFile; productRef = D9786BE22FEBFE47009829E3 /* TelemetryClient */; };
 		D9786BE52FEBFE47009829E3 /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = D9786BE42FEBFE47009829E3 /* TelemetryDeck */; };
 		E2EF92A9046EE3CB3D0153FD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B94F517DA9577B4DC18C9EA4 /* StoreKit.framework */; };
-		F1DEE033A719839009C17F11 /* Distill.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AB59E12CBF846BC049121B9E /* Distill.storekit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -368,7 +367,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1000040 /* Assets.xcassets in Resources */,
-				F1DEE033A719839009C17F11 /* Distill.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +565,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
@@ -602,7 +600,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
@@ -634,7 +632,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GENERATE_INFOPLIST_FILE = NO;
 				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;
@@ -663,7 +661,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GENERATE_INFOPLIST_FILE = NO;
 				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;
@@ -692,7 +690,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DistillShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
@@ -726,7 +724,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DistillShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
