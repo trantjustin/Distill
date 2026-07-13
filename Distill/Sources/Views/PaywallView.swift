@@ -17,11 +17,11 @@ struct PaywallView: View {
                         .font(.system(size: 64))
                         .foregroundStyle(.indigo)
 
-                    Text("Distill Pro")
+                    Text("Distill Subscription")
                         .font(.largeTitle)
                         .fontWeight(.bold)
 
-                    Text("Start your 7-day free trial, then $4.99/month. Unlock unlimited AI-powered learnings from every book you read.")
+                    Text("Start your 7-day free trial, then US$4.99/month (or local equivalent). Unlock unlimited AI-powered learnings from every book you read.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)

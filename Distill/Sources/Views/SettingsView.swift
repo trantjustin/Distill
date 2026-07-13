@@ -14,7 +14,7 @@ struct SettingsView: View {
                             .foregroundStyle(subscriptionManager.isSubscribed ? .green : .orange)
                             .font(.title2)
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(subscriptionManager.isSubscribed ? "Subscribed" : "Distill Pro")
+                            Text(subscriptionManager.isSubscribed ? "Subscribed" : "Distill Subscription")
                                 .font(.headline)
                             Text(subscriptionManager.isSubscribed
                                  ? "You have unlimited access."
