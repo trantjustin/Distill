@@ -20,11 +20,8 @@ enum AddBookMode: String, CaseIterable {
 struct AddBookView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("ai_provider") private var selectedProviderName: String = AIProvider.openAI.rawValue
-    @AppStorage("openai_api_key")     private var openAIKey: String = ""
-    @AppStorage("claude_api_key")     private var claudeKey: String = ""
-    @AppStorage("gemini_api_key")     private var geminiKey: String = ""
-    @AppStorage("perplexity_api_key") private var perplexityKey: String = ""
+    @StateObject private var subscriptionManager = SubscriptionManager.shared
+    @State private var showPaywall = false
 
     var prefillTitle: String = ""
     var prefillAuthor: String = ""
@@ -40,21 +37,8 @@ struct AddBookView: View {
 
     private let colors = ["indigo", "blue", "purple", "teal", "green", "orange", "pink", "red"]
 
-    private var activeProvider: AIProvider {
-        AIProvider(rawValue: selectedProviderName) ?? .openAI
-    }
-
-    private var activeAPIKey: String {
-        switch activeProvider {
-        case .openAI:     return openAIKey
-        case .claude:     return claudeKey
-        case .gemini:     return geminiKey
-        case .perplexity: return perplexityKey
-        }
-    }
-
     var canGenerate: Bool {
-        !title.isEmpty && !author.isEmpty && !activeAPIKey.isEmpty
+        !title.isEmpty && !author.isEmpty && subscriptionManager.isSubscribed
     }
 
     var body: some View {
@@ -73,11 +57,14 @@ struct AddBookView: View {
 
                     if selectedCoverURL == nil { colorPicker }
 
-                    if activeAPIKey.isEmpty { apiKeyWarning }
+                    if !subscriptionManager.isSubscribed { subscriptionWarning }
 
                     generateButton
                 }
                 .padding()
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
             }
             .navigationTitle("Add Book")
             .navigationBarTitleDisplayMode(.inline)
@@ -205,21 +192,34 @@ struct AddBookView: View {
         }
     }
 
-    private var apiKeyWarning: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "key.fill")
-                .foregroundStyle(.orange)
-            Text("Add your \(activeProvider.rawValue) API key in Settings first")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+    private var subscriptionWarning: some View {
+        Button {
+            showPaywall = true
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "crown.fill")
+                    .foregroundStyle(.orange)
+                Text("Start 7-day free trial to generate learnings")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .padding()
+            .background(.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
         }
-        .padding()
-        .background(.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
+        .buttonStyle(.plain)
     }
 
     private var generateButton: some View {
         Button {
-            Task { await generateLearnings() }
+            if subscriptionManager.isSubscribed {
+                Task { await generateLearnings() }
+            } else {
+                showPaywall = true
+            }
         } label: {
             Group {
                 if isGenerating {
@@ -227,21 +227,27 @@ struct AddBookView: View {
                         ProgressView().tint(.white)
                         Text("Generating Learnings…")
                     }
+                } else if subscriptionManager.isSubscribed {
+                    HStack(spacing: 8) {
+                        Image(systemName: "sparkles")
+                        Text("Generate Learnings")
+                            .fontWeight(.semibold)
+                    }
                 } else {
                     HStack(spacing: 8) {
-                        Image(systemName: activeProvider.icon)
-                        Text("Generate with \(activeProvider.rawValue)")
+                        Image(systemName: "lock.fill")
+                        Text("Subscribe to Generate")
                             .fontWeight(.semibold)
                     }
                 }
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(canGenerate ? Color.indigo : Color.gray.opacity(0.3))
-            .foregroundStyle(canGenerate ? .white : .secondary)
+            .background(canGenerate ? Color.indigo : Color.orange.opacity(0.2))
+            .foregroundStyle(canGenerate ? .white : .orange)
             .clipShape(RoundedRectangle(cornerRadius: 16))
         }
-        .disabled(!canGenerate || isGenerating)
+        .disabled(isGenerating)
     }
 
     private func generateLearnings() async {
@@ -255,9 +261,7 @@ struct AddBookView: View {
 
             async let texts = AIService.shared.generateLearnings(
                 for: bookTitle,
-                author: bookAuthor,
-                provider: activeProvider,
-                apiKey: activeAPIKey
+                author: bookAuthor
             )
 
             let resolvedTexts = try await texts
@@ -282,7 +286,6 @@ struct AddBookView: View {
                 try? context.save()
                 syncWidget()
                 TelemetryDeck.signal("book.added", parameters: [
-                    "provider": activeProvider.rawValue,
                     "mode": mode.rawValue
                 ])
                 dismiss()
@@ -325,7 +328,8 @@ struct AddBookView: View {
                     bookAuthor: learning.bookAuthor,
                     coverImageURL: urlString,
                     coverImageData: imageData,
-                    dominantColorHex: colorHex
+                    dominantColorHex: colorHex,
+                    coverColor: learning.book?.coverColor
                 ))
             }
 

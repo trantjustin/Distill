@@ -7,6 +7,11 @@ struct DistillApp: App {
     init() {
         let config = TelemetryDeck.Config(appID: "9400970A-7730-4CC7-99B5-37A7E6C9C96F")
         TelemetryDeck.initialize(config: config)
+
+        Task {
+            await SubscriptionManager.shared.loadProducts()
+            await SubscriptionManager.shared.updateSubscriptionStatus()
+        }
     }
 
     var sharedModelContainer: ModelContainer = {

@@ -11,20 +11,21 @@ This repository hosts the GitHub Pages site for Distill (in [`docs/`](docs/)).
 ## Features
 
 - **AI-Powered Learnings** — search or scan a book → AI generates 8 concise, actionable insights
-- **Multi-Provider AI** — supports OpenAI, Claude, Gemini, and Perplexity
+- **Subscription Access** — 7-day free trial, then $4.99/month for unlimited generations
 - **Book Artwork** — automatically fetches cover art from Open Library
 - **Library** — browse all your books with cover art
 - **Daily Review** — swipe through learnings with spaced-repetition style cards
-- **Customisable Home Screen Widget** — small, medium, and large sizes; colour theme; refresh rate
+- **Customisable Home Screen Widget** — small, medium, and large sizes; refresh rate and attribution
 - **Share Extension** — share text or URLs from any app to add books
-- **On-device storage** — all data stored locally with SwiftData, never sent to any server
+- **On-device storage** — all book data stored locally with SwiftData
 
 ## Requirements
 
 - Xcode 16+
 - iOS 17+ deployment target
-- An API key from one of: [OpenAI](https://platform.openai.com), [Anthropic](https://console.anthropic.com), [Google AI Studio](https://aistudio.google.com), or [Perplexity](https://docs.perplexity.ai)
-- Apple Developer account (required for App Groups / widget / share extension)
+- Apple Developer account (required for App Groups / widget / share extension / IAP)
+- A Cloudflare Workers backend (see [`DistillBackend/`](../DistillBackend))
+- A Groq API key
 
 ## Setup
 
@@ -36,20 +37,31 @@ This repository hosts the GitHub Pages site for Distill (in [`docs/`](docs/)).
    - DistillWidget: `com.jtrant.distill.widget`
    - DistillShareExtension: `com.jtrant.distill.share`
 5. Add the **TelemetryDeck** Swift package: `https://github.com/TelemetryDeck/SwiftSDK`
-6. Build & run
+6. Set your backend URL in `Distill/Sources/Models/BackendConfig.swift`
+7. Build & run
 
-## Adding an API Key
+## App Store Connect Configuration
 
-1. Launch the app → **Settings** tab
-2. Paste your API key under the relevant provider
-3. The provider unlocks automatically once a valid key is entered
+Before shipping, configure in-app purchases:
+
+1. Create an **Auto-Renewable Subscription** with ID `com.jtrant.distill.subscription.monthly`
+2. Set the price to **$4.99 / month**
+3. Add a **7-day free trial** introductory offer
+4. Generate an **App-Specific Shared Secret** and add it to your Cloudflare Worker secrets
+5. Upload the paid apps agreement and tax/banking information to enable IAP
+
+## Testing Subscriptions Locally
+
+1. Open **Product → Scheme → Edit Scheme → Run → Options**
+2. Set **StoreKit Configuration** to `Distill.storekit`
+3. Run the app and use a sandbox Apple ID to test the 7-day trial flow
 
 ## Widget Setup
 
 1. Long-press the home screen → **+**
 2. Search for **Distill**
 3. Choose a size → tap **Add Widget**
-4. Long-press the widget → **Edit Widget** to customise colour theme and refresh rate
+4. Long-press the widget → **Edit Widget** to customise refresh rate and attribution
 
 ## Project Structure
 
@@ -58,8 +70,10 @@ Distill/
 ├── Distill/
 │   ├── DistillApp.swift
 │   ├── Assets.xcassets/
+│   ├── Distill.storekit         # Local StoreKit test configuration
 │   └── Sources/
 │       ├── Models/
+│       │   ├── BackendConfig.swift
 │       │   ├── Book.swift
 │       │   └── Learning.swift
 │       ├── Views/
@@ -68,11 +82,14 @@ Distill/
 │       │   ├── AddBookView.swift
 │       │   ├── BookDetailView.swift
 │       │   ├── ReviewView.swift
-│       │   └── SettingsView.swift
+│       │   ├── SettingsView.swift
+│       │   └── PaywallView.swift
 │       ├── Services/
 │       │   ├── AIService.swift
 │       │   ├── BookCoverService.swift
-│       │   └── OpenLibraryService.swift
+│       │   ├── OpenLibraryService.swift
+│       │   ├── ReceiptProvider.swift
+│       │   └── SubscriptionManager.swift
 │       └── Utilities/
 │           └── CoverColors.swift
 ├── DistillWidget/

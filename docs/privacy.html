@@ -12,25 +12,25 @@
     <div class="wordmark"><a href="index.html" style="color:inherit;text-decoration:none;">Distill<span style="color:#f59e0b;">.</span></a></div>
 
     <h1>Privacy Policy</h1>
-    <p class="muted" style="text-align:center; margin-bottom:24px;">Effective June 24, 2026</p>
+    <p class="muted" style="text-align:center; margin-bottom:24px;">Effective July 13, 2026</p>
 
     <div class="panel">
       <h2>The short version</h2>
-      <p><strong>Distill does not collect, store, or share your personal data.</strong> Your books, learnings, and API keys live entirely on your device. To understand how the app is used in aggregate, Distill sends a small number of anonymized usage signals to TelemetryDeck — nothing that identifies you or your content.</p>
+      <p><strong>Distill does not require an account and does not collect personal data.</strong> Your books and learnings live on your device. When you generate learnings, the book title and author are sent to Distill's backend to produce the response. To understand how the app is used in aggregate, Distill sends a small number of anonymized usage signals to TelemetryDeck — nothing that identifies you or your content.</p>
     </div>
 
     <div class="panel">
       <h2>Your data stays on your device</h2>
-      <p>All books, learnings, and review history are stored locally using SwiftData. Distill has no server, no account system, and no cloud sync. Deleting the app removes all data.</p>
+      <p>All books, learnings, and review history are stored locally using SwiftData. Distill does not require an account and has no cloud sync. Deleting the app removes all data.</p>
 
-      <h2>API keys</h2>
-      <p>API keys you enter in Settings are stored in your device's local UserDefaults. They are never transmitted to Distill or any third party — they are sent only to the AI provider you have chosen (OpenAI, Anthropic, Google, or Perplexity) when you request learnings. Each provider's own privacy policy governs how they handle that request.</p>
+      <h2>Subscription & receipts</h2>
+      <p>Distill uses StoreKit for subscriptions. Your App Store receipt is verified by Distill's backend to confirm an active subscription before generating learnings. No Apple ID, email, or other personal identifier is sent or stored.</p>
 
       <h2>Book cover art</h2>
       <p>When you add a book, Distill queries the Open Library search API (<a href="https://openlibrary.org" rel="noopener">openlibrary.org</a>) to retrieve cover art. This request includes the book title and author you entered — no account or identifier is sent. Open Library is operated by the Internet Archive under its own privacy policy.</p>
 
       <h2>AI-generated learnings</h2>
-      <p>When you generate learnings, the book title and author are sent to your chosen AI provider via their public API. No other data is included. Distill does not see, store, or forward this request.</p>
+      <p>When you generate learnings, the book title and author are sent to Distill's backend (hosted on Cloudflare Workers). The backend verifies your subscription receipt and forwards only the book title and author to <a href="https://groq.com" rel="noopener">Groq</a> to generate the learnings. No personal data, device identifiers, or reading history are included. Learnings are returned to your device and stored locally. Groq's data handling is governed by <a href="https://groq.com/privacy-policy/" rel="noopener">Groq's privacy policy</a>.</p>
     </div>
 
     <div class="panel">
@@ -38,7 +38,7 @@
       <p>Distill uses <a href="https://telemetrydeck.com" rel="noopener">TelemetryDeck</a> to count anonymous events. TelemetryDeck hashes device identifiers before they leave your device, so the data cannot be tied to you. The complete list of events reported:</p>
       <ul>
         <li><strong>App launched</strong></li>
-        <li><strong>Book added</strong> — with the AI provider used and how the book was found (search, barcode, or manual)</li>
+        <li><strong>Book added</strong> — with how the book was found (search, barcode, or manual)</li>
         <li><strong>Book deleted</strong></li>
         <li><strong>Review session started</strong> — with the total number of learnings available</li>
         <li><strong>Learning marked as known</strong></li>
