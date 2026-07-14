@@ -97,10 +97,22 @@ struct BookDetailView: View {
         .padding(.bottom, 24)
     }
 
+    private var sortedLearnings: [Learning] {
+        book.learnings.sorted { a, b in
+            chapterSortKey(a.chapter) < chapterSortKey(b.chapter)
+        }
+    }
+
+    private func chapterSortKey(_ chapter: String) -> Int {
+        let digits = chapter.components(separatedBy: CharacterSet.decimalDigits.inverted)
+            .first(where: { !$0.isEmpty })
+        return Int(digits ?? "") ?? Int.max
+    }
+
     private var learningsList: some View {
         LazyVStack(spacing: 12, pinnedViews: [.sectionHeaders]) {
             Section {
-                ForEach(book.learnings) { learning in
+                ForEach(sortedLearnings) { learning in
                     LearningCardView(learning: learning, accentColor: accentColor)
                 }
             } header: {
