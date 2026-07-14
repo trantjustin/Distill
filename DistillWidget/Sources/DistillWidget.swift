@@ -156,11 +156,11 @@ struct SmallWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(truncateToCharacters(learning.text, max: 60))
+                Text(truncateToSentences(learning.text, maxSentences: 1))
                     .font(.system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
-                    .lineLimit(5)
-                    .minimumScaleFactor(0.6)
+                    .lineLimit(6)
+                    .minimumScaleFactor(0.55)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle {
@@ -198,11 +198,11 @@ struct MediumWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(truncateToCharacters(learning.text, max: 120))
+                Text(truncateToSentences(learning.text, maxSentences: 2))
                     .font(.system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
-                    .lineLimit(4)
-                    .minimumScaleFactor(0.7)
+                    .lineLimit(6)
+                    .minimumScaleFactor(0.6)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 attributionRow(learning: learning)
@@ -252,11 +252,11 @@ struct LargeWidgetView: View {
                     .foregroundStyle(.white.opacity(0.18))
                     .padding(.bottom, -20)
 
-                Text(truncateToCharacters(learning.text, max: 280))
+                Text(truncateToSentences(learning.text, maxSentences: 3))
                     .font(.system(.body, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
-                    .lineLimit(10)
-                    .minimumScaleFactor(0.7)
+                    .lineLimit(12)
+                    .minimumScaleFactor(0.65)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle || showAuthor {
