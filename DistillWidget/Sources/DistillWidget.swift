@@ -151,8 +151,8 @@ struct SmallWidgetView: View {
                 Text(truncateToSentences(learning.text, maxSentences: 1))
                     .font(.system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
-                    .lineLimit(6)
-                    .minimumScaleFactor(0.78)
+                    .lineLimit(9)
+                    .minimumScaleFactor(0.65)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle {
@@ -245,11 +245,10 @@ struct LargeWidgetView: View {
                     .padding(.bottom, -20)
 
                 Text(truncateToSentences(learning.text, maxSentences: 2))
-                    .font(.system(.title3, design: .serif).weight(.semibold))
+                    .font(.system(.body, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
-                    .lineSpacing(5)
-                    .lineLimit(9)
-                    .minimumScaleFactor(0.75)
+                    .lineLimit(12)
+                    .minimumScaleFactor(0.70)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle || showAuthor {
