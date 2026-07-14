@@ -50,7 +50,7 @@ struct AddBookView: View {
 
                     switch mode {
                     case .search: SearchInputView(title: $title, author: $author, selectedCoverURL: $selectedCoverURL)
-                    case .scan:   BarcodeScanInputView(title: $title, author: $author)
+                    case .scan:   BarcodeScanInputView(title: $title, author: $author, selectedCoverURL: $selectedCoverURL)
                     }
 
                     if selectedCoverURL == nil { colorPicker }
@@ -523,6 +523,7 @@ struct SearchInputView: View {
 struct BarcodeScanInputView: View {
     @Binding var title: String
     @Binding var author: String
+    @Binding var selectedCoverURL: String?
 
     @State private var showScanner = false
     @State private var isLookingUp = false
@@ -543,6 +544,7 @@ struct BarcodeScanInputView: View {
                         scannedISBN = nil
                         title = ""
                         author = ""
+                        selectedCoverURL = nil
                     } label: {
                         Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
                     }
@@ -630,6 +632,7 @@ struct BarcodeScanInputView: View {
         if let result = try? await OpenLibraryService.shared.lookupISBN(isbn) {
             title = result.title
             author = result.author
+            selectedCoverURL = result.coverURL.map { $0.absoluteString.replacingOccurrences(of: "-M.jpg", with: "-L.jpg") }
         } else {
             lookupError = "Couldn't find this book. Try entering the title manually."
         }
