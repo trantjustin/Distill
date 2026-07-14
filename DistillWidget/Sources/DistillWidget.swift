@@ -90,6 +90,14 @@ func truncateToSentences(_ text: String, maxSentences: Int) -> String {
     return parts.prefix(maxSentences).joined(separator: ". ") + "."
 }
 
+func truncateToCharacters(_ text: String, max: Int) -> String {
+    let sentence = truncateToSentences(text, maxSentences: 1)
+    guard sentence.count > max else { return sentence }
+    let cut = String(sentence.prefix(max))
+    let trimmed = cut.lastIndex(of: " ").map { String(cut[..<$0]) } ?? cut
+    return trimmed + "…"
+}
+
 // MARK: - Shared Components
 
 struct BookCoverThumbnail: View {
@@ -148,7 +156,7 @@ struct SmallWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(truncateToSentences(learning.text, maxSentences: 1))
+                Text(truncateToCharacters(learning.text, max: 90))
                     .font(.system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
                     .lineLimit(9)
@@ -190,7 +198,7 @@ struct MediumWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(truncateToSentences(learning.text, maxSentences: 1))
+                Text(truncateToCharacters(learning.text, max: 150))
                     .font(.system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
                     .lineLimit(5)
