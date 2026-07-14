@@ -171,7 +171,6 @@ struct BookDetailView: View {
 struct LearningCardView: View {
     let learning: Learning
     let accentColor: Color
-    @State private var isExpanded = false
 
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
@@ -186,13 +185,11 @@ struct LearningCardView: View {
 
             Text(learning.text)
                 .font(.subheadline)
-                .lineLimit(isExpanded ? nil : 4)
-                .animation(.easeInOut(duration: 0.2), value: isExpanded)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.background, in: RoundedRectangle(cornerRadius: 14))
         .shadow(color: .black.opacity(0.04), radius: 6, y: 2)
-        .onTapGesture { isExpanded.toggle() }
     }
 }
