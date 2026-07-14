@@ -252,7 +252,7 @@ struct LargeWidgetView: View {
                     .foregroundStyle(.white.opacity(0.18))
                     .padding(.bottom, -20)
 
-                Text(truncateToSentences(learning.text, maxSentences: 3))
+                Text(truncateToSentences(learning.text, maxSentences: 4))
                     .font(.system(.body, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
                     .lineLimit(12)
