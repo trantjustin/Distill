@@ -171,6 +171,18 @@ struct BookDetailView: View {
 struct LearningCardView: View {
     let learning: Learning
     let accentColor: Color
+    @State private var isExpanded = false
+
+    private var headline: String {
+        let parts = learning.text.components(separatedBy: ". ")
+        return parts.count > 1 ? parts[0] + "." : learning.text
+    }
+
+    private var detail: String? {
+        let parts = learning.text.components(separatedBy: ". ")
+        guard parts.count > 1 else { return nil }
+        return parts.dropFirst().joined(separator: ". ")
+    }
 
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
@@ -183,13 +195,34 @@ struct LearningCardView: View {
                         .foregroundStyle(accentColor)
                 }
 
-            Text(learning.text)
-                .font(.subheadline)
-                .fixedSize(horizontal: false, vertical: true)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(headline)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if isExpanded, let detail {
+                    Text(detail)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                }
+
+                if detail != nil {
+                    Label(isExpanded ? "Show less" : "Read more", systemImage: isExpanded ? "chevron.up" : "chevron.down")
+                        .font(.caption2)
+                        .foregroundStyle(accentColor)
+                }
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.background, in: RoundedRectangle(cornerRadius: 14))
         .shadow(color: .black.opacity(0.04), radius: 6, y: 2)
+        .onTapGesture {
+            guard detail != nil else { return }
+            withAnimation(.easeInOut(duration: 0.2)) { isExpanded.toggle() }
+        }
     }
 }
