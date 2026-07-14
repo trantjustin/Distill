@@ -86,8 +86,10 @@ struct LearningProvider: AppIntentTimelineProvider {
 
 func truncateToSentences(_ text: String, maxSentences: Int) -> String {
     let parts = text.components(separatedBy: ". ")
-    guard parts.count > maxSentences else { return text }
-    return parts.prefix(maxSentences).joined(separator: ". ") + "."
+    let selected = parts.prefix(maxSentences)
+    let joined = selected.joined(separator: ". ")
+    if joined.last == "." || joined.last == "!" || joined.last == "?" { return joined }
+    return joined + "."
 }
 
 func truncateToCharacters(_ text: String, max: Int) -> String {
