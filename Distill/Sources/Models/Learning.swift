@@ -5,6 +5,7 @@ import SwiftData
 final class Learning {
     var id: UUID
     var text: String
+    var chapter: String
     var bookTitle: String
     var bookAuthor: String
     var dateAdded: Date
@@ -12,9 +13,10 @@ final class Learning {
     var reviewCount: Int
     var book: Book?
 
-    init(text: String, bookTitle: String, bookAuthor: String) {
+    init(text: String, chapter: String = "", bookTitle: String, bookAuthor: String) {
         self.id = UUID()
         self.text = text
+        self.chapter = chapter
         self.bookTitle = bookTitle
         self.bookAuthor = bookAuthor
         self.dateAdded = Date()

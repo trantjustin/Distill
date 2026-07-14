@@ -276,8 +276,8 @@ struct AddBookView: View {
                 let book = Book(title: title, author: author, coverColor: selectedColor, coverImageURL: resolvedCover)
                 context.insert(book)
 
-                for text in resolvedTexts {
-                    let learning = Learning(text: text, bookTitle: title, bookAuthor: author)
+                for item in resolvedTexts {
+                    let learning = Learning(text: item.text, chapter: item.chapter, bookTitle: title, bookAuthor: author)
                     learning.book = book
                     book.learnings.append(learning)
                     context.insert(learning)

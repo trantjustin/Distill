@@ -17,7 +17,7 @@ struct AIService {
         """
     }
 
-    func generateLearnings(for title: String, author: String) async throws -> [String] {
+    func generateLearnings(for title: String, author: String) async throws -> [(chapter: String, text: String)] {
         #if DEBUG
         let receipt = "debug_bypass"
         #else
@@ -43,7 +43,7 @@ struct AIService {
         try checkHTTP(response, data: data)
 
         let decoded = try JSONDecoder().decode(BackendExtractResponse.self, from: data)
-        return decoded.learnings
+        return decoded.learnings.map { ($0.chapter, $0.text) }
     }
 
     private func checkHTTP(_ response: URLResponse, data: Data) throws {
@@ -71,8 +71,13 @@ struct AIService {
     }
 }
 
+private struct BackendLearningItem: Decodable {
+    let chapter: String
+    let text: String
+}
+
 private struct BackendExtractResponse: Decodable {
-    let learnings: [String]
+    let learnings: [BackendLearningItem]
 }
 
 enum AIError: LocalizedError {

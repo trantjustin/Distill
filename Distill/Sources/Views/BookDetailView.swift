@@ -128,8 +128,8 @@ struct BookDetailView: View {
             await MainActor.run {
                 for learning in book.learnings { context.delete(learning) }
                 book.learnings.removeAll()
-                for text in texts {
-                    let learning = Learning(text: text, bookTitle: book.title, bookAuthor: book.author)
+                for item in texts {
+                    let learning = Learning(text: item.text, chapter: item.chapter, bookTitle: book.title, bookAuthor: book.author)
                     learning.book = book
                     book.learnings.append(learning)
                     context.insert(learning)
@@ -196,6 +196,13 @@ struct LearningCardView: View {
                 }
 
             VStack(alignment: .leading, spacing: 6) {
+                if !learning.chapter.isEmpty {
+                    Text(learning.chapter)
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(accentColor)
+                        .textCase(.uppercase)
+                }
                 Text(headline)
                     .font(.subheadline)
                     .fontWeight(.medium)
