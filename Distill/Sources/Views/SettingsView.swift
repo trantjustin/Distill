@@ -84,8 +84,8 @@ struct SettingsView: View {
                 }
 
                 Section("About") {
-                    LabeledContent("Version", value: "1.0.0")
-                    LabeledContent("AI Summaries", value: "Groq")
+                    LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—")
+                    LabeledContent("AI Model", value: "Llama 3.3 70B (Groq)")
                 }
             }
             .navigationTitle("Settings")
