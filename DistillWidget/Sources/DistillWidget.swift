@@ -5,39 +5,6 @@ import UIKit
 
 // MARK: - Configuration Intent
 
-enum WidgetColorTheme: String, AppEnum {
-    case indigo   = "indigo"
-    case midnight = "midnight"
-    case sunset   = "sunset"
-    case forest   = "forest"
-    case rose     = "rose"
-
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Color Theme"
-    static var caseDisplayRepresentations: [WidgetColorTheme: DisplayRepresentation] = [
-        .indigo:   DisplayRepresentation(title: "Indigo"),
-        .midnight: DisplayRepresentation(title: "Midnight"),
-        .sunset:   DisplayRepresentation(title: "Sunset"),
-        .forest:   DisplayRepresentation(title: "Forest"),
-        .rose:     DisplayRepresentation(title: "Rose"),
-    ]
-
-    var colors: [Color] {
-        switch self {
-        case .indigo:   return [.indigo, Color(red: 0.5, green: 0.2, blue: 0.9)]
-        case .midnight: return [Color(red: 0.05, green: 0.05, blue: 0.2), Color(red: 0.1, green: 0.1, blue: 0.4)]
-        case .sunset:   return [Color(red: 0.95, green: 0.4, blue: 0.2), Color(red: 0.9, green: 0.2, blue: 0.5)]
-        case .forest:   return [Color(red: 0.1, green: 0.4, blue: 0.2), Color(red: 0.2, green: 0.6, blue: 0.3)]
-        case .rose:     return [Color(red: 0.8, green: 0.2, blue: 0.4), Color(red: 0.6, green: 0.1, blue: 0.5)]
-        }
-    }
-
-    var gradient: LinearGradient {
-        LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
-    }
-
-    var accentColor: Color { colors[0] }
-}
-
 enum WidgetRefreshRate: String, AppEnum {
     case frequent = "frequent"
     case twiceDaily = "twiceDaily"
@@ -62,9 +29,6 @@ enum WidgetRefreshRate: String, AppEnum {
 struct DistillWidgetIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Distill Widget"
     static var description = IntentDescription("Customize your Distill widget.")
-
-    @Parameter(title: "Color Theme", default: .indigo)
-    var colorTheme: WidgetColorTheme
 
     @Parameter(title: "Refresh Rate", default: .frequent)
     var refreshRate: WidgetRefreshRate
@@ -156,23 +120,21 @@ struct DistillWidgetEntryView: View {
     var entry: LearningEntry
     @Environment(\.widgetFamily) var family
 
-    var theme: WidgetColorTheme { entry.configuration.colorTheme }
     var showTitle: Bool { entry.configuration.showBookTitle }
     var showAuthor: Bool { entry.configuration.showAuthor }
 
     var body: some View {
         switch family {
-        case .systemSmall:  SmallWidgetView(entry: entry, theme: theme, showTitle: showTitle)
-        case .systemMedium: MediumWidgetView(entry: entry, theme: theme, showTitle: showTitle, showAuthor: showAuthor)
-        case .systemLarge:  LargeWidgetView(entry: entry, theme: theme, showTitle: showTitle, showAuthor: showAuthor)
-        default:            MediumWidgetView(entry: entry, theme: theme, showTitle: showTitle, showAuthor: showAuthor)
+        case .systemSmall:  SmallWidgetView(entry: entry, showTitle: showTitle)
+        case .systemMedium: MediumWidgetView(entry: entry, showTitle: showTitle, showAuthor: showAuthor)
+        case .systemLarge:  LargeWidgetView(entry: entry, showTitle: showTitle, showAuthor: showAuthor)
+        default:            MediumWidgetView(entry: entry, showTitle: showTitle, showAuthor: showAuthor)
         }
     }
 }
 
 struct SmallWidgetView: View {
     let entry: LearningEntry
-    let theme: WidgetColorTheme
     let showTitle: Bool
 
     var body: some View {
@@ -199,7 +161,7 @@ struct SmallWidgetView: View {
         .padding(14)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .containerBackground(for: .widget) {
-            widgetBackground(imageData: entry.learning?.coverImageData, dominantHex: entry.learning?.dominantColorHex, gradient: theme.gradient)
+            widgetBackground(dominantHex: entry.learning?.dominantColorHex, coverColor: entry.learning?.coverColor)
         }
     }
 
@@ -214,7 +176,6 @@ struct SmallWidgetView: View {
 
 struct MediumWidgetView: View {
     let entry: LearningEntry
-    let theme: WidgetColorTheme
     let showTitle: Bool
     let showAuthor: Bool
 
@@ -240,7 +201,7 @@ struct MediumWidgetView: View {
         .padding(14)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .containerBackground(for: .widget) {
-            widgetBackground(imageData: entry.learning?.coverImageData, dominantHex: entry.learning?.dominantColorHex, gradient: theme.gradient)
+            widgetBackground(dominantHex: entry.learning?.dominantColorHex, coverColor: entry.learning?.coverColor)
         }
     }
 
@@ -264,7 +225,6 @@ struct MediumWidgetView: View {
 
 struct LargeWidgetView: View {
     let entry: LearningEntry
-    let theme: WidgetColorTheme
     let showTitle: Bool
     let showAuthor: Bool
 
@@ -310,13 +270,13 @@ struct LargeWidgetView: View {
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .containerBackground(for: .widget) {
-            widgetBackground(imageData: entry.learning?.coverImageData, dominantHex: entry.learning?.dominantColorHex, gradient: theme.gradient)
+            widgetBackground(dominantHex: entry.learning?.dominantColorHex, coverColor: entry.learning?.coverColor)
         }
     }
 }
 
 @ViewBuilder
-func widgetBackground(imageData: Data?, dominantHex: String?, gradient: LinearGradient) -> some View {
+func widgetBackground(dominantHex: String?, coverColor: String?) -> some View {
     if let hex = dominantHex, let color = Color(hex: hex) {
         LinearGradient(
             colors: [color.darkened(by: 0.25), color],
@@ -324,7 +284,24 @@ func widgetBackground(imageData: Data?, dominantHex: String?, gradient: LinearGr
             endPoint: .bottomTrailing
         )
     } else {
-        gradient
+        LinearGradient(
+            colors: [namedColor(coverColor).darkened(by: 0.25), namedColor(coverColor)],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+}
+
+func namedColor(_ name: String?) -> Color {
+    switch name {
+    case "blue":    return .blue
+    case "purple":  return .purple
+    case "teal":    return .teal
+    case "green":   return .green
+    case "orange":  return .orange
+    case "pink":    return .pink
+    case "red":     return .red
+    default:        return .indigo
     }
 }
 

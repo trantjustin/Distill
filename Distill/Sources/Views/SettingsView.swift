@@ -18,7 +18,7 @@ struct SettingsView: View {
                                 .font(.headline)
                             Text(subscriptionManager.isSubscribed
                                  ? "You have unlimited access."
-                                 : "7-day free trial, then $4.99/month (or local equivalent).")
+                                 : "7-day free trial, then $2.99/month (or local equivalent).")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }

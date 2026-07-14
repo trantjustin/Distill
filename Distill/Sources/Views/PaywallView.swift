@@ -21,7 +21,7 @@ struct PaywallView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
 
-                    Text("Start your 7-day free trial, then US$4.99/month (or local equivalent). Unlock unlimited AI-powered learnings from every book you read.")
+                    Text("Start your 7-day free trial, then US$2.99/month (or local equivalent). Unlock unlimited AI-powered learnings from every book you read.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -73,7 +73,7 @@ struct PaywallView: View {
                         .foregroundStyle(.secondary)
                 }
 
-                Text("7-day free trial, then $4.99/month (or local equivalent). Auto-renews until cancelled. You can cancel anytime in Settings.")
+                Text("7-day free trial, then $2.99/month (or local equivalent). Auto-renews until cancelled. You can cancel anytime in Settings.")
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
                     .multilineTextAlignment(.center)

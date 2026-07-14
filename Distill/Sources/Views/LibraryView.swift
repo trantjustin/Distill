@@ -61,7 +61,8 @@ struct LibraryView: View {
                         bookAuthor: learning.bookAuthor,
                         coverImageURL: urlString,
                         coverImageData: imageData,
-                        dominantColorHex: colorHex
+                        dominantColorHex: colorHex,
+                        coverColor: book.coverColor
                     ))
                 }
             }

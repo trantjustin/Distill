@@ -39,7 +39,7 @@
       "localizations" : [
 
       ],
-      "name" : "$4.99/month with 7-day trial",
+      "name" : "$2.99/month with 7-day trial",
       "subscriptions" : [
         {
           "adHocOffers" : [
@@ -48,8 +48,8 @@
           "billingPlans" : [
             {
               "billingPlanType" : "BILLED_UPFRONT",
-              "commitmentDisplayPrice" : "4.99",
-              "displayPrice" : "4.99",
+              "commitmentDisplayPrice" : "2.99",
+              "displayPrice" : "2.99",
               "internalID" : "6790374236_BILLED_UPFRONT",
               "isEnabled" : true
             }
@@ -57,7 +57,7 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "4.99",
+          "displayPrice" : "2.99",
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "6790374236",

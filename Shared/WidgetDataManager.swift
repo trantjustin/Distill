@@ -7,14 +7,16 @@ public struct WidgetLearning: Codable, Sendable {
     public let coverImageURL: String?
     public let coverImageData: Data?
     public let dominantColorHex: String?
+    public let coverColor: String?
 
-    public init(text: String, bookTitle: String, bookAuthor: String, coverImageURL: String? = nil, coverImageData: Data? = nil, dominantColorHex: String? = nil) {
+    public init(text: String, bookTitle: String, bookAuthor: String, coverImageURL: String? = nil, coverImageData: Data? = nil, dominantColorHex: String? = nil, coverColor: String? = nil) {
         self.text = text
         self.bookTitle = bookTitle
         self.bookAuthor = bookAuthor
         self.coverImageURL = coverImageURL
         self.coverImageData = coverImageData
         self.dominantColorHex = dominantColorHex
+        self.coverColor = coverColor
     }
 }
 

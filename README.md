@@ -11,7 +11,7 @@ This repository hosts the GitHub Pages site for Distill (in [`docs/`](docs/)).
 ## Features
 
 - **AI-Powered Learnings** — search or scan a book → AI generates 8 concise, actionable insights
-- **Subscription Access** — 7-day free trial, then $4.99/month for unlimited generations
+- **Subscription Access** — 7-day free trial, then $2.99/month for unlimited generations
 - **Book Artwork** — automatically fetches cover art from Open Library
 - **Library** — browse all your books with cover art
 - **Daily Review** — swipe through learnings with spaced-repetition style cards
@@ -45,7 +45,7 @@ This repository hosts the GitHub Pages site for Distill (in [`docs/`](docs/)).
 Before shipping, configure in-app purchases:
 
 1. Create an **Auto-Renewable Subscription** with ID `com.jtrant.distill.subscription.monthly`
-2. Set the price to **$4.99 / month**
+2. Set the price to **$2.99 / month**
 3. Add a **7-day free trial** introductory offer
 4. Generate an **App-Specific Shared Secret** and add it to your Cloudflare Worker secrets
 5. Upload the paid apps agreement and tax/banking information to enable IAP
