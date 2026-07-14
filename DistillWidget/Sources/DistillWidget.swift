@@ -82,6 +82,14 @@ struct LearningProvider: AppIntentTimelineProvider {
     }
 }
 
+// MARK: - Text Helpers
+
+func truncateToSentences(_ text: String, maxSentences: Int) -> String {
+    let parts = text.components(separatedBy: ". ")
+    guard parts.count > maxSentences else { return text }
+    return parts.prefix(maxSentences).joined(separator: ". ") + "."
+}
+
 // MARK: - Shared Components
 
 struct BookCoverThumbnail: View {
@@ -140,7 +148,7 @@ struct SmallWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(learning.text)
+                Text(truncateToSentences(learning.text, maxSentences: 1))
                     .font(.system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
                     .lineLimit(6)
@@ -182,7 +190,7 @@ struct MediumWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(learning.text)
+                Text(truncateToSentences(learning.text, maxSentences: 1))
                     .font(.system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
                     .lineLimit(5)
@@ -236,7 +244,7 @@ struct LargeWidgetView: View {
                     .foregroundStyle(.white.opacity(0.18))
                     .padding(.bottom, -20)
 
-                Text(learning.text)
+                Text(truncateToSentences(learning.text, maxSentences: 2))
                     .font(.system(.title3, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
                     .lineSpacing(5)

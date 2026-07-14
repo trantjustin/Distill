@@ -6,7 +6,13 @@ import TelemetryDeck
 struct BookDetailView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var subscriptionManager = SubscriptionManager.shared
     let book: Book
+
+    @State private var isRegenerating = false
+    @State private var showError = false
+    @State private var errorMessage: String?
+    @State private var showPaywall = false
 
     private var accentColor: Color {
         CoverColors.color(for: book.coverColor)
@@ -23,13 +29,39 @@ struct BookDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(role: .destructive) {
-                    deleteBook()
-                } label: {
-                    Image(systemName: "trash")
-                        .foregroundStyle(.red)
+                HStack(spacing: 16) {
+                    Button {
+                        if subscriptionManager.isSubscribed {
+                            Task { await regenerateLearnings() }
+                        } else {
+                            showPaywall = true
+                        }
+                    } label: {
+                        if isRegenerating {
+                            ProgressView()
+                        } else {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                    }
+                    .disabled(isRegenerating)
+
+                    Button(role: .destructive) {
+                        deleteBook()
+                    } label: {
+                        Image(systemName: "trash")
+                            .foregroundStyle(.red)
+                    }
+                    .disabled(isRegenerating)
                 }
             }
+        }
+        .alert("Error", isPresented: $showError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(errorMessage ?? "An unknown error occurred.")
+        }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
         }
     }
 
@@ -88,6 +120,32 @@ struct BookDetailView: View {
         .padding(.bottom, 24)
     }
 
+    private func regenerateLearnings() async {
+        isRegenerating = true
+        defer { isRegenerating = false }
+        do {
+            let texts = try await AIService.shared.generateLearnings(for: book.title, author: book.author)
+            await MainActor.run {
+                for learning in book.learnings { context.delete(learning) }
+                book.learnings.removeAll()
+                for text in texts {
+                    let learning = Learning(text: text, bookTitle: book.title, bookAuthor: book.author)
+                    learning.book = book
+                    book.learnings.append(learning)
+                    context.insert(learning)
+                }
+                try? context.save()
+                syncWidget()
+                TelemetryDeck.signal("book.regenerated")
+            }
+        } catch {
+            await MainActor.run {
+                errorMessage = error.localizedDescription
+                showError = true
+            }
+        }
+    }
+
     private func deleteBook() {
         for learning in book.learnings {
             context.delete(learning)
@@ -128,7 +186,7 @@ struct LearningCardView: View {
 
             Text(learning.text)
                 .font(.subheadline)
-                .lineLimit(isExpanded ? nil : 3)
+                .lineLimit(isExpanded ? nil : 4)
                 .animation(.easeInOut(duration: 0.2), value: isExpanded)
         }
         .padding()
