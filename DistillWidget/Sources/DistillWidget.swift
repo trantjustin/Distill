@@ -156,11 +156,9 @@ struct SmallWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(truncateToCharacters(learning.text, max: 90))
+                Text(truncateToCharacters(learning.text, max: 60))
                     .font(.system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
-                    .lineLimit(9)
-                    .minimumScaleFactor(0.65)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle {
@@ -198,11 +196,9 @@ struct MediumWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let learning = entry.learning {
-                Text(truncateToCharacters(learning.text, max: 150))
+                Text(truncateToCharacters(learning.text, max: 120))
                     .font(.system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
-                    .lineLimit(5)
-                    .minimumScaleFactor(0.82)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 attributionRow(learning: learning)
@@ -252,11 +248,9 @@ struct LargeWidgetView: View {
                     .foregroundStyle(.white.opacity(0.18))
                     .padding(.bottom, -20)
 
-                Text(truncateToSentences(learning.text, maxSentences: 2))
+                Text(truncateToCharacters(learning.text, max: 280))
                     .font(.system(.body, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
-                    .lineLimit(12)
-                    .minimumScaleFactor(0.70)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle || showAuthor {
