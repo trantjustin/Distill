@@ -159,6 +159,8 @@ struct SmallWidgetView: View {
                 Text(truncateToCharacters(learning.text, max: 60))
                     .font(.system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
+                    .lineLimit(5)
+                    .minimumScaleFactor(0.6)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle {
@@ -199,6 +201,8 @@ struct MediumWidgetView: View {
                 Text(truncateToCharacters(learning.text, max: 120))
                     .font(.system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
+                    .lineLimit(4)
+                    .minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 attributionRow(learning: learning)
@@ -251,6 +255,8 @@ struct LargeWidgetView: View {
                 Text(truncateToCharacters(learning.text, max: 280))
                     .font(.system(.body, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
+                    .lineLimit(10)
+                    .minimumScaleFactor(0.7)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle || showAuthor {
