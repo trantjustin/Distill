@@ -6,13 +6,11 @@ import TelemetryDeck
 enum AddBookMode: String, CaseIterable {
     case search = "Search"
     case scan   = "Scan ISBN"
-    case manual = "Manual"
 
     var icon: String {
         switch self {
         case .search: return "magnifyingglass"
         case .scan:   return "barcode.viewfinder"
-        case .manual: return "pencil"
         }
     }
 }
@@ -27,6 +25,7 @@ struct AddBookView: View {
     var prefillAuthor: String = ""
 
     @State private var mode: AddBookMode = .search
+
     @State private var title = ""
     @State private var author = ""
     @State private var selectedColor = "indigo"
@@ -52,7 +51,6 @@ struct AddBookView: View {
                     switch mode {
                     case .search: SearchInputView(title: $title, author: $author, selectedCoverURL: $selectedCoverURL)
                     case .scan:   BarcodeScanInputView(title: $title, author: $author)
-                    case .manual: manualInputFields
                     }
 
                     if selectedCoverURL == nil { colorPicker }
@@ -82,7 +80,6 @@ struct AddBookView: View {
                 if !prefillTitle.isEmpty {
                     title = prefillTitle
                     author = prefillAuthor
-                    mode = .manual
                 }
             }
         }
@@ -156,13 +153,6 @@ struct AddBookView: View {
         }
         .background(.secondary.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 14))
-    }
-
-    private var manualInputFields: some View {
-        VStack(spacing: 16) {
-            InputField(title: "Book Title", text: $title, placeholder: "e.g. Atomic Habits")
-            InputField(title: "Author", text: $author, placeholder: "e.g. James Clear")
-        }
     }
 
     private var colorPicker: some View {
@@ -388,6 +378,7 @@ struct SearchInputView: View {
     @State private var isSearching = false
     @State private var searchTask: Task<Void, Never>?
     @State private var isSelecting = false
+    @State private var hasSearched = false
 
     var body: some View {
         VStack(spacing: 14) {
@@ -483,6 +474,19 @@ struct SearchInputView: View {
 
             if !title.isEmpty {
                 selectedBookBadge
+            } else if hasSearched && !isSearching && results.isEmpty && query.count > 2 {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
+                        Text("No results found. Enter details manually.")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                    .padding(10)
+                    .background(.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
+
+                    InputField(title: "Book Title", text: $title, placeholder: "e.g. Atomic Habits")
+                    InputField(title: "Author", text: $author, placeholder: "e.g. James Clear")
+                }
             }
         }
     }
@@ -510,6 +514,7 @@ struct SearchInputView: View {
         isSearching = true
         defer { isSearching = false }
         results = (try? await OpenLibraryService.shared.search(query: q)) ?? []
+        hasSearched = true
     }
 }
 
@@ -589,13 +594,19 @@ struct BarcodeScanInputView: View {
                 }
             }
 
-            if let error = lookupError {
-                HStack(spacing: 8) {
-                    Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
-                    Text(error).font(.caption).foregroundStyle(.secondary)
+            if lookupError != nil {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+                        Text("Book not found. Enter details below to continue.")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                    .padding(10)
+                    .background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
+
+                    InputField(title: "Book Title", text: $title, placeholder: "e.g. Atomic Habits")
+                    InputField(title: "Author", text: $author, placeholder: "e.g. James Clear")
                 }
-                .padding(10)
-                .background(.orange.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
             }
         }
         .fullScreenCover(isPresented: $showScanner) {
