@@ -33,17 +33,33 @@ struct AIService {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(receipt, forHTTPHeaderField: "X-Receipt-Data")
 
-        let body: [String: Any] = [
-            "title": title,
-            "author": author
-        ]
+        let body: [String: Any] = ["title": title, "author": author]
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
-        let (data, response) = try await URLSession.shared.data(for: request)
-        try checkHTTP(response, data: data)
+        return try await withRetry(maxAttempts: 3) {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            try self.checkHTTP(response, data: data)
+            let decoded = try JSONDecoder().decode(BackendExtractResponse.self, from: data)
+            return decoded.learnings.map { ($0.chapter, $0.text) }
+        }
+    }
 
-        let decoded = try JSONDecoder().decode(BackendExtractResponse.self, from: data)
-        return decoded.learnings.map { ($0.chapter, $0.text) }
+    private func withRetry<T>(maxAttempts: Int, operation: () async throws -> T) async throws -> T {
+        var lastError: Error?
+        for attempt in 0..<maxAttempts {
+            do {
+                return try await operation()
+            } catch AIError.serverError {
+                lastError = AIError.serverError(code: 500)
+                if attempt < maxAttempts - 1 {
+                    let delay = UInt64(pow(2.0, Double(attempt))) * 1_000_000_000
+                    try? await Task.sleep(nanoseconds: delay)
+                }
+            } catch {
+                throw error
+            }
+        }
+        throw lastError ?? AIError.serverError(code: 500)
     }
 
     private func checkHTTP(_ response: URLResponse, data: Data) throws {
@@ -100,8 +116,8 @@ enum AIError: LocalizedError {
             return "Rate limit reached. Please wait a moment and try again."
         case .badRequest(let msg):
             return "Bad request: \(msg)"
-        case .serverError(let code):
-            return "Server error (\(code)). Please try again shortly."
+        case .serverError:
+            return "Something went wrong on our end. Please try again."
         case .httpError(let code, let msg):
             if let msg { return "Error \(code): \(msg)" }
             return "Unexpected error (HTTP \(code))."
