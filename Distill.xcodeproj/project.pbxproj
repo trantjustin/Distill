@@ -20,7 +20,6 @@
 		A1000008 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000008 /* Book.swift */; };
 		A1000009 /* Learning.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000009 /* Learning.swift */; };
 		A1000011 /* CoverColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011 /* CoverColors.swift */; };
-		A1000060 /* LearningsPDFRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000060 /* LearningsPDFRenderer.swift */; };
 		A1000012 /* WidgetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012 /* WidgetDataManager.swift */; };
 		A1000013 /* OpenLibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000013 /* OpenLibraryService.swift */; };
 		A1000014 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000014 /* BarcodeScannerView.swift */; };
@@ -31,6 +30,7 @@
 		A1000032 /* DistillWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A3000002 /* DistillWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A1000040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000040 /* Assets.xcassets */; };
 		A1000050 /* BookCoverService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000050 /* BookCoverService.swift */; };
+		A1000060 /* LearningsPDFRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000060 /* LearningsPDFRenderer.swift */; };
 		A39A6BD6464339CB70851A0C /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096367A6D260BFF2098ABA60 /* SubscriptionManager.swift */; };
 		D92AE0A42FEB453C000A32A5 /* DistillShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D92AE09A2FEB453C000A32A5 /* DistillShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D92AE0AA2FEB482A000A32A5 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92AE0A92FEB482A000A32A5 /* AIService.swift */; };
@@ -85,7 +85,6 @@
 		A2000008 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		A2000009 /* Learning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Learning.swift; sourceTree = "<group>"; };
 		A2000011 /* CoverColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverColors.swift; sourceTree = "<group>"; };
-		A2000060 /* LearningsPDFRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningsPDFRenderer.swift; sourceTree = "<group>"; };
 		A2000012 /* WidgetDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataManager.swift; sourceTree = "<group>"; };
 		A2000013 /* OpenLibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLibraryService.swift; sourceTree = "<group>"; };
 		A2000014 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
@@ -94,6 +93,7 @@
 		A2000031 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A2000040 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2000050 /* BookCoverService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverService.swift; sourceTree = "<group>"; };
+		A2000060 /* LearningsPDFRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningsPDFRenderer.swift; sourceTree = "<group>"; };
 		A2F528D016AFEFE13BF303A1 /* BackendConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackendConfig.swift; sourceTree = "<group>"; };
 		A3000002 /* DistillWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DistillWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3000010 /* Distill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Distill.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -573,6 +573,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSAppTransportSecurity = "<dict><key>NSAllowsArbitraryLoads</key><false/></dict>";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Distill uses the camera to scan book barcodes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -584,7 +585,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -608,6 +609,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Distill uses the camera to scan book barcodes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -618,7 +620,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrant.distill;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
