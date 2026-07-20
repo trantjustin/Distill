@@ -13,6 +13,8 @@ struct BookDetailView: View {
     @State private var showError = false
     @State private var errorMessage: String?
     @State private var showPaywall = false
+    @State private var shareURL: URL?
+    @State private var showShareSheet = false
 
     private var accentColor: Color {
         CoverColors.color(for: book.coverColor)
@@ -45,6 +47,13 @@ struct BookDetailView: View {
                     }
                     .disabled(isRegenerating)
 
+                    Button {
+                        exportPDF()
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                    .disabled(isRegenerating || book.learnings.isEmpty)
+
                     Button(role: .destructive) {
                         deleteBook()
                     } label: {
@@ -62,6 +71,11 @@ struct BookDetailView: View {
         }
         .sheet(isPresented: $showPaywall) {
             PaywallView()
+        }
+        .sheet(isPresented: $showShareSheet, onDismiss: { shareURL = nil }) {
+            if let url = shareURL {
+                ShareSheet(url: url)
+            }
         }
     }
 
@@ -169,6 +183,17 @@ struct BookDetailView: View {
         dismiss()
     }
 
+    private func exportPDF() {
+        guard let url = LearningsPDFRenderer.render(
+            book: book,
+            accentColor: accentColor,
+            learnings: sortedLearnings
+        ) else { return }
+        shareURL = url
+        showShareSheet = true
+        TelemetryDeck.signal("book.exported")
+    }
+
     private func syncWidget() {
         let descriptor = FetchDescriptor<Learning>()
         guard let allLearnings = try? context.fetch(descriptor) else { return }
@@ -178,6 +203,16 @@ struct BookDetailView: View {
         WidgetDataManager.saveLearnings(widgetLearnings)
         WidgetCenter.shared.reloadAllTimelines()
     }
+}
+
+struct ShareSheet: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: [url], applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 struct LearningCardView: View {
