@@ -26,23 +26,9 @@ enum WidgetRefreshRate: String, AppEnum {
     }
 }
 
-enum WidgetDisplayMode: Int, AppEnum {
-    case rotateLearnings = 0
-    case bookSummary = 1
-
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Display Mode"
-    static var caseDisplayRepresentations: [WidgetDisplayMode: DisplayRepresentation] = [
-        .rotateLearnings: DisplayRepresentation(title: "Rotate Learnings"),
-        .bookSummary:     DisplayRepresentation(title: "Book Summary"),
-    ]
-}
-
 struct DistillWidgetIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Distill Widget"
     static var description = IntentDescription("Customize your Distill widget.")
-
-    @Parameter(title: "Display Mode", default: .rotateLearnings)
-    var displayMode: WidgetDisplayMode
 
     @Parameter(title: "Refresh Rate", default: .frequent)
     var refreshRate: WidgetRefreshRate
@@ -92,7 +78,7 @@ struct LearningProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: DistillWidgetIntent, in context: Context) async -> LearningEntry {
-        let isSummary = configuration.displayMode == .bookSummary
+        let isSummary = WidgetDataManager.loadDisplayMode() == "bookSummary"
         let learning = isSummary
             ? WidgetDataManager.loadBooks().first
             : WidgetDataManager.loadTodayLearning()
@@ -100,8 +86,7 @@ struct LearningProvider: AppIntentTimelineProvider {
     }
 
     func timeline(for configuration: DistillWidgetIntent, in context: Context) async -> Timeline<LearningEntry> {
-        let isSummary = configuration.displayMode == .bookSummary
-        WidgetDataManager.saveDisplayMode(isSummary ? "bookSummary" : "rotateLearnings") // rawValue is now Int but key stored as string label
+        let isSummary = WidgetDataManager.loadDisplayMode() == "bookSummary"
         var entries: [LearningEntry] = []
         var date = Date()
 
@@ -279,12 +264,12 @@ struct MediumWidgetView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             } else if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
-                    Text("BOOK SUMMARY · raw:\(entry.configuration.displayMode.rawValue)")
+                    Text("BOOK SUMMARY")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .padding(.bottom, 5)
                 } else {
-                    Text("\(learning.chapter ?? "LEARNING") · raw:\(entry.configuration.displayMode.rawValue)")
+                    Text((learning.chapter ?? "LEARNING").uppercased())
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)

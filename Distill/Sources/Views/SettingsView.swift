@@ -1,9 +1,11 @@
 import SwiftUI
 import StoreKit
+import WidgetKit
 
 struct SettingsView: View {
     @StateObject private var subscriptionManager = SubscriptionManager.shared
     @State private var showPaywall = false
+    @State private var widgetDisplayMode: String = WidgetDataManager.loadDisplayMode()
 
     var body: some View {
         NavigationStack {
@@ -69,18 +71,19 @@ struct SettingsView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    HStack {
-                        Image(systemName: "paintpalette.fill")
-                            .foregroundStyle(.indigo)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Customise the Widget")
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                            Text("Long-press the widget → Edit Widget to change refresh rate and attribution")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
+                    Picker(selection: $widgetDisplayMode) {
+                        Text("Rotate Learnings").tag("rotateLearnings")
+                        Text("Book Summary").tag("bookSummary")
+                    } label: {
+                        Label("Display Mode", systemImage: "text.book.closed.fill")
+                            .foregroundStyle(.primary)
                     }
+                    .onChange(of: widgetDisplayMode) { _, newValue in
+                        WidgetDataManager.saveDisplayMode(newValue)
+                        WidgetCenter.shared.reloadAllTimelines()
+                    }
+                } footer: {
+                    Text("Book Summary shows the full overview of each book, cycling through your library.")
                 }
 
                 Section("About") {
