@@ -569,7 +569,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
@@ -605,7 +605,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Distill/Distill.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleURLTypes = "<array><dict><key>CFBundleURLSchemes</key><array><string>distill</string></array></dict></array>";
@@ -638,7 +638,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				GENERATE_INFOPLIST_FILE = NO;
 				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;
@@ -667,7 +667,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = DistillWidget/DistillWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				GENERATE_INFOPLIST_FILE = NO;
 				"INFOPLIST_FILE[sdk=*]" = DistillWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillWidget;

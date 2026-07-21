@@ -132,9 +132,8 @@ func truncateToSentences(_ text: String, maxSentences: Int) -> String {
 }
 
 func truncateToCharacters(_ text: String, max: Int) -> String {
-    let sentence = truncateToSentences(text, maxSentences: 1)
-    guard sentence.count > max else { return sentence }
-    let cut = String(sentence.prefix(max))
+    guard text.count > max else { return text }
+    let cut = String(text.prefix(max))
     let trimmed = cut.lastIndex(of: " ").map { String(cut[..<$0]) } ?? cut
     return trimmed + "…"
 }
@@ -203,11 +202,15 @@ struct SmallWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .padding(.bottom, 4)
                 }
-                Text(truncateToSentences(displayText, maxSentences: entry.isSummaryMode ? 3 : 1))
-                    .font(.system(.caption, design: .serif).weight(.medium))
+                Text(entry.isSummaryMode
+                    ? truncateToCharacters(displayText, max: 220)
+                    : truncateToSentences(displayText, maxSentences: 1))
+                    .font(entry.isSummaryMode
+                        ? .system(size: 10, design: .serif).weight(.regular)
+                        : .system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
-                    .lineLimit(6)
-                    .minimumScaleFactor(0.55)
+                    .lineLimit(entry.isSummaryMode ? 9 : 6)
+                    .minimumScaleFactor(0.5)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle {
@@ -254,11 +257,15 @@ struct MediumWidgetView: View {
                     }
                     .padding(.bottom, 5)
                 }
-                Text(truncateToSentences(displayText, maxSentences: entry.isSummaryMode ? 4 : 2))
-                    .font(.system(.subheadline, design: .serif).weight(.medium))
+                Text(entry.isSummaryMode
+                    ? truncateToCharacters(displayText, max: 380)
+                    : truncateToSentences(displayText, maxSentences: 2))
+                    .font(entry.isSummaryMode
+                        ? .system(size: 11, design: .serif).weight(.regular)
+                        : .system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
-                    .lineLimit(6)
-                    .minimumScaleFactor(0.6)
+                    .lineLimit(entry.isSummaryMode ? 9 : 6)
+                    .minimumScaleFactor(0.55)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 attributionRow(learning: learning)
@@ -315,11 +322,15 @@ struct LargeWidgetView: View {
                         .padding(.bottom, -20)
                 }
 
-                Text(entry.isSummaryMode ? displayText : truncateToSentences(displayText, maxSentences: 4))
-                    .font(.system(.body, design: .serif).weight(entry.isSummaryMode ? .regular : .semibold))
+                Text(entry.isSummaryMode
+                    ? truncateToCharacters(displayText, max: 700)
+                    : truncateToSentences(displayText, maxSentences: 4))
+                    .font(entry.isSummaryMode
+                        ? .system(size: 13, design: .serif).weight(.regular)
+                        : .system(.body, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
-                    .lineLimit(12)
-                    .minimumScaleFactor(0.65)
+                    .lineLimit(entry.isSummaryMode ? 18 : 12)
+                    .minimumScaleFactor(0.6)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 
                 if showTitle || showAuthor {
