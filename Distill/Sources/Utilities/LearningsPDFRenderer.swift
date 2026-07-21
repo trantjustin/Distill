@@ -20,6 +20,16 @@ struct LearningsPDFRenderer {
         let contentWidth = pageSize.width - margin * 2
         let totalPages = estimatePageCount(learnings: learnings, contentWidth: contentWidth, margin: margin, pageSize: pageSize)
 
+        // Capture colours as locals so nested functions don't reference @MainActor statics
+        let cNavy      = navy
+        let cCyan      = cyan
+        let cBlue      = blue
+        let cInsightBg = insightBg
+        let cPageBg    = pageBg
+        let cCharcoal  = charcoal
+        let cMutedGrey = mutedGrey
+        let cCardBorder = cardBorder
+
         let renderer = UIGraphicsPDFRenderer(bounds: CGRect(origin: .zero, size: pageSize))
         let tempURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("\(book.title) — Distill Summary.pdf")
@@ -47,7 +57,7 @@ struct LearningsPDFRenderer {
                     currentPage += 1
 
                     // Off-white background
-                    pageBg.setFill()
+                    cPageBg.setFill()
                     UIRectFill(CGRect(origin: .zero, size: pageSize))
 
                     yOffset = margin
@@ -56,7 +66,7 @@ struct LearningsPDFRenderer {
                     if currentPage > 1 {
                         let headerAttrs: [NSAttributedString.Key: Any] = [
                             .font: UIFont.systemFont(ofSize: 9, weight: .regular),
-                            .foregroundColor: mutedGrey
+                            .foregroundColor: cMutedGrey
                         ]
                         let leftStr = NSAttributedString(string: "\(book.title) Executive Summary", attributes: headerAttrs)
                         let rightStr = NSAttributedString(string: "Page \(currentPage) of \(totalPages)", attributes: headerAttrs)
@@ -65,7 +75,7 @@ struct LearningsPDFRenderer {
                         rightStr.draw(at: CGPoint(x: pageSize.width - margin - rightW, y: 20))
 
                         // thin rule
-                        mutedGrey.withAlphaComponent(0.3).setFill()
+                        cMutedGrey.withAlphaComponent(0.3).setFill()
                         UIRectFill(CGRect(x: margin, y: 34, width: contentWidth, height: 0.5))
                         yOffset = 52
                     }
@@ -74,7 +84,7 @@ struct LearningsPDFRenderer {
                 func pageFooter() {
                     let attrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 9),
-                        .foregroundColor: mutedGrey
+                        .foregroundColor: cMutedGrey
                     ]
                     let str = NSAttributedString(string: "\(book.title) Executive Summary", attributes: attrs)
                     str.draw(at: CGPoint(x: margin, y: pageSize.height - 28))
@@ -94,7 +104,7 @@ struct LearningsPDFRenderer {
                     let coverHeight: CGFloat = 110
                     let coverRect = CGRect(x: margin - 12, y: yOffset, width: contentWidth + 24, height: coverHeight)
                     let coverPath = UIBezierPath(roundedRect: coverRect, cornerRadius: 10)
-                    navy.setFill()
+                    cNavy.setFill()
                     coverPath.fill()
 
                     let titleAttrs: [NSAttributedString.Key: Any] = [
@@ -104,7 +114,7 @@ struct LearningsPDFRenderer {
                     ]
                     let subtitleAttrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                        .foregroundColor: cyan
+                        .foregroundColor: cCyan
                     ]
                     let taglineAttrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 11, weight: .regular),
@@ -129,7 +139,7 @@ struct LearningsPDFRenderer {
                 func drawSectionHeader(_ label: String) {
                     let attrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 13, weight: .bold),
-                        .foregroundColor: charcoal,
+                        .foregroundColor: cCharcoal,
                         .kern: 0.8
                     ]
                     let str = NSAttributedString(string: label.uppercased(), attributes: attrs)
@@ -138,7 +148,7 @@ struct LearningsPDFRenderer {
                     checkPageBreak(neededHeight: h + 16)
 
                     // Left blue accent bar
-                    blue.setFill()
+                    cBlue.setFill()
                     UIRectFill(CGRect(x: margin - 12, y: yOffset, width: 4, height: h))
 
                     str.draw(in: CGRect(x: margin, y: yOffset + 8, width: contentWidth - 16, height: h))
@@ -153,11 +163,11 @@ struct LearningsPDFRenderer {
 
                     let chapterAttrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 12, weight: .semibold),
-                        .foregroundColor: blue
+                        .foregroundColor: cBlue
                     ]
                     let bodyAttrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 11.5, weight: .regular),
-                        .foregroundColor: charcoal,
+                        .foregroundColor: cCharcoal,
                         .paragraphStyle: ps(lineSpacing: 3)
                     ]
 
@@ -183,11 +193,11 @@ struct LearningsPDFRenderer {
                     let insightW = innerW - insightIndent - 4
                     let insightLabelAttrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 11, weight: .bold),
-                        .foregroundColor: charcoal
+                        .foregroundColor: cCharcoal
                     ]
                     let insightBodyAttrs: [NSAttributedString.Key: Any] = [
                         .font: UIFont.systemFont(ofSize: 11, weight: .regular),
-                        .foregroundColor: charcoal,
+                        .foregroundColor: cCharcoal,
                         .paragraphStyle: ps(lineSpacing: 2)
                     ]
 
@@ -210,7 +220,7 @@ struct LearningsPDFRenderer {
                     let cardPath = UIBezierPath(roundedRect: cardRect, cornerRadius: 8)
                     UIColor.white.setFill()
                     cardPath.fill()
-                    cardBorder.setStroke()
+                    cCardBorder.setStroke()
                     cardPath.lineWidth = 0.8
                     cardPath.stroke()
 
@@ -228,11 +238,11 @@ struct LearningsPDFRenderer {
                         // Insight callout box
                         let insightBoxRect = CGRect(x: margin, y: innerY, width: innerW, height: insightBlockH)
                         let insightPath = UIBezierPath(roundedRect: insightBoxRect, cornerRadius: 5)
-                        insightBg.setFill()
+                        cInsightBg.setFill()
                         insightPath.fill()
 
                         // Left border accent
-                        blue.setFill()
+                        cBlue.setFill()
                         UIRectFill(CGRect(x: margin, y: innerY, width: 3, height: insightBlockH))
 
                         insightStr.draw(in: CGRect(x: margin + insightIndent, y: innerY + 10,
