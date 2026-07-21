@@ -26,9 +26,9 @@ enum WidgetRefreshRate: String, AppEnum {
     }
 }
 
-enum WidgetDisplayMode: String, AppEnum {
-    case rotateLearnings = "rotateLearnings"
-    case bookSummary = "bookSummary"
+enum WidgetDisplayMode: Int, AppEnum {
+    case rotateLearnings = 0
+    case bookSummary = 1
 
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Display Mode"
     static var caseDisplayRepresentations: [WidgetDisplayMode: DisplayRepresentation] = [
@@ -101,7 +101,7 @@ struct LearningProvider: AppIntentTimelineProvider {
 
     func timeline(for configuration: DistillWidgetIntent, in context: Context) async -> Timeline<LearningEntry> {
         let isSummary = configuration.displayMode == .bookSummary
-        WidgetDataManager.saveDisplayMode(isSummary ? "bookSummary" : "rotateLearnings")
+        WidgetDataManager.saveDisplayMode(isSummary ? "bookSummary" : "rotateLearnings") // rawValue is now Int but key stored as string label
         var entries: [LearningEntry] = []
         var date = Date()
 
@@ -279,12 +279,12 @@ struct MediumWidgetView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             } else if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
-                    Text("BOOK SUMMARY · mode:\(entry.configuration.displayMode.rawValue)")
+                    Text("BOOK SUMMARY · raw:\(entry.configuration.displayMode.rawValue)")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .padding(.bottom, 5)
                 } else {
-                    Text("\(learning.chapter ?? "LEARNING") · mode:\(entry.configuration.displayMode.rawValue)")
+                    Text("\(learning.chapter ?? "LEARNING") · raw:\(entry.configuration.displayMode.rawValue)")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
