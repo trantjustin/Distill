@@ -78,7 +78,8 @@ struct LearningProvider: AppIntentTimelineProvider {
                 text: "Habits are the compound interest of self-improvement.",
                 bookTitle: "Atomic Habits",
                 bookAuthor: "James Clear",
-                bookSummary: "Atomic Habits argues that tiny 1% improvements compound into remarkable results over time. The book introduces the Four Laws of Behavior Change as a framework for building good habits and breaking bad ones. By focusing on systems rather than goals, readers transform their identity and achieve lasting change."
+                bookSummary: "Atomic Habits argues that tiny 1% improvements compound into remarkable results over time. The book introduces the Four Laws of Behavior Change as a framework for building good habits and breaking bad ones. By focusing on systems rather than goals, readers transform their identity and achieve lasting change.",
+                chapter: "Chapter 1: The Surprising Power of Atomic Habits"
             ),
             configuration: DistillWidgetIntent(),
             isSummaryMode: false
@@ -201,8 +202,8 @@ struct SmallWidgetView: View {
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .padding(.bottom, 4)
-                } else if let chapter = learning.chapter {
-                    Text(chapter.uppercased())
+                } else {
+                    Text((learning.chapter ?? "LEARNING").uppercased())
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
@@ -263,8 +264,8 @@ struct MediumWidgetView: View {
                         Spacer()
                     }
                     .padding(.bottom, 5)
-                } else if let chapter = learning.chapter {
-                    Text(chapter.uppercased())
+                } else {
+                    Text((learning.chapter ?? "LEARNING").uppercased())
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
@@ -334,14 +335,12 @@ struct LargeWidgetView: View {
                         .font(.system(size: 48, weight: .bold))
                         .foregroundStyle(.white.opacity(0.18))
                         .padding(.bottom, -20)
-                    if let chapter = learning.chapter {
-                        Text(chapter.uppercased())
-                            .font(.system(size: 9, weight: .bold))
-                            .foregroundStyle(.white.opacity(0.5))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.7)
-                            .padding(.bottom, 4)
-                    }
+                    Text((learning.chapter ?? "LEARNING").uppercased())
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .padding(.bottom, 4)
                 }
 
                 Text(entry.isSummaryMode
