@@ -71,12 +71,9 @@ struct SettingsView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    Picker(selection: $widgetDisplayMode) {
+                    Picker("Display Mode", selection: $widgetDisplayMode) {
                         Text("Rotate Learnings").tag("rotateLearnings")
                         Text("Book Summary").tag("bookSummary")
-                    } label: {
-                        Label("Display Mode", systemImage: "text.book.closed.fill")
-                            .foregroundStyle(.primary)
                     }
                     .onChange(of: widgetDisplayMode) { _, newValue in
                         WidgetDataManager.saveDisplayMode(newValue)
