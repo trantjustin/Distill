@@ -221,7 +221,7 @@ struct SmallWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom, 4)
                 }
                 Text(entry.isSummaryMode
@@ -261,7 +261,7 @@ struct SmallWidgetView: View {
             .foregroundStyle(.white.opacity(0.55))
             .lineLimit(1)
             .minimumScaleFactor(0.8)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
@@ -290,7 +290,7 @@ struct MediumWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom, 5)
                 }
                 Text(entry.isSummaryMode
@@ -336,7 +336,7 @@ struct MediumWidgetView: View {
             .foregroundStyle(.white.opacity(0.5))
             .lineLimit(1)
             .minimumScaleFactor(0.8)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
@@ -369,7 +369,7 @@ struct LargeWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom, 4)
                 }
 
@@ -399,7 +399,7 @@ struct LargeWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
                 }
             } else {
