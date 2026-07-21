@@ -219,6 +219,7 @@ struct SmallWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.bottom, 4)
                 }
                 Text(entry.isSummaryMode
@@ -258,7 +259,7 @@ struct SmallWidgetView: View {
             .foregroundStyle(.white.opacity(0.55))
             .lineLimit(1)
             .minimumScaleFactor(0.8)
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -287,6 +288,7 @@ struct MediumWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.bottom, 5)
                 }
                 Text(entry.isSummaryMode
@@ -332,7 +334,7 @@ struct MediumWidgetView: View {
             .foregroundStyle(.white.opacity(0.5))
             .lineLimit(1)
             .minimumScaleFactor(0.8)
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -365,6 +367,7 @@ struct LargeWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.bottom, 4)
                 }
 
@@ -394,7 +397,7 @@ struct LargeWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 10)
                 }
             } else {
