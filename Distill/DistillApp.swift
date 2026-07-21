@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import TelemetryDeck
+import WidgetKit
 
 @main
 struct DistillApp: App {
@@ -46,6 +47,7 @@ struct DistillApp: App {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 checkForSharedBook()
+                WidgetCenter.shared.reloadAllTimelines()
             }
         }
     }

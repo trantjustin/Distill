@@ -29,6 +29,15 @@ public struct WidgetDataManager {
     public static let learningsKey = "widget_learnings"
     public static let todayLearningKey = "widget_today_learning"
     public static let booksKey = "widget_books"
+    public static let displayModeKey = "widget_display_mode"
+
+    public static func saveDisplayMode(_ mode: String) {
+        sharedDefaults?.set(mode, forKey: displayModeKey)
+    }
+
+    public static func loadDisplayMode() -> String {
+        sharedDefaults?.string(forKey: displayModeKey) ?? "rotateLearnings"
+    }
 
     public static var sharedDefaults: UserDefaults? {
         UserDefaults(suiteName: appGroupID)

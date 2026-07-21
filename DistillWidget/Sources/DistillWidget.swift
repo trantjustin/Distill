@@ -93,6 +93,7 @@ struct LearningProvider: AppIntentTimelineProvider {
 
     func snapshot(for configuration: DistillWidgetIntent, in context: Context) async -> LearningEntry {
         let isSummary = configuration.displayMode == .bookSummary
+        WidgetDataManager.saveDisplayMode(isSummary ? "bookSummary" : "rotateLearnings")
         let learning = isSummary
             ? WidgetDataManager.loadBooks().first
             : WidgetDataManager.loadTodayLearning()
@@ -101,6 +102,7 @@ struct LearningProvider: AppIntentTimelineProvider {
 
     func timeline(for configuration: DistillWidgetIntent, in context: Context) async -> Timeline<LearningEntry> {
         let isSummary = configuration.displayMode == .bookSummary
+        WidgetDataManager.saveDisplayMode(isSummary ? "bookSummary" : "rotateLearnings")
         var entries: [LearningEntry] = []
         var date = Date()
 
