@@ -93,7 +93,6 @@ struct LearningProvider: AppIntentTimelineProvider {
 
     func snapshot(for configuration: DistillWidgetIntent, in context: Context) async -> LearningEntry {
         let isSummary = configuration.displayMode == .bookSummary
-        WidgetDataManager.saveDisplayMode(isSummary ? "bookSummary" : "rotateLearnings")
         let learning = isSummary
             ? WidgetDataManager.loadBooks().first
             : WidgetDataManager.loadTodayLearning()
@@ -280,12 +279,12 @@ struct MediumWidgetView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             } else if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
-                    Text("BOOK SUMMARY")
+                    Text("BOOK SUMMARY · mode:\(entry.configuration.displayMode.rawValue)")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .padding(.bottom, 5)
                 } else {
-                    Text((learning.chapter ?? "LEARNING").uppercased())
+                    Text("\(learning.chapter ?? "LEARNING") · mode:\(entry.configuration.displayMode.rawValue)")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
