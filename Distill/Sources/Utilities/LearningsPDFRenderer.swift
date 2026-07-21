@@ -352,11 +352,14 @@ struct LearningsPDFRenderer {
                 // MARK: Render
                 beginPage()
                 drawCover()
-                if !book.summary.isEmpty {
-                    drawExecutiveOverview(book.summary)
+                if let summary = book.summary, !summary.isEmpty {
+                    drawExecutiveOverview(summary)
                 }
-                if !book.paradigmShiftTitle.isEmpty {
-                    drawParadigmShift(title: book.paradigmShiftTitle, before: book.paradigmShiftBefore, after: book.paradigmShiftAfter)
+                if let psTitle = book.paradigmShiftTitle,
+                   let psBefore = book.paradigmShiftBefore,
+                   let psAfter = book.paradigmShiftAfter,
+                   !psTitle.isEmpty {
+                    drawParadigmShift(title: psTitle, before: psBefore, after: psAfter)
                 }
                 drawSectionHeader("Chapter-by-Chapter Core Learnings")
                 for learning in learnings {

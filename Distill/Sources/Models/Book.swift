@@ -10,12 +10,12 @@ final class Book {
     var coverImageURL: String?
     var dateAdded: Date
     var learnings: [Learning]
-    var summary: String
-    var paradigmShiftTitle: String
-    var paradigmShiftBefore: String
-    var paradigmShiftAfter: String
+    var summary: String?
+    var paradigmShiftTitle: String?
+    var paradigmShiftBefore: String?
+    var paradigmShiftAfter: String?
 
-    init(title: String, author: String, coverColor: String = "blue", coverImageURL: String? = nil, summary: String = "", paradigmShiftTitle: String = "", paradigmShiftBefore: String = "", paradigmShiftAfter: String = "") {
+    init(title: String, author: String, coverColor: String = "blue", coverImageURL: String? = nil, summary: String? = nil, paradigmShiftTitle: String? = nil, paradigmShiftBefore: String? = nil, paradigmShiftAfter: String? = nil) {
         self.id = UUID()
         self.title = title
         self.author = author

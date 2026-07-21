@@ -152,10 +152,10 @@ struct BookDetailView: View {
         do {
             let result = try await AIService.shared.generateLearnings(for: book.title, author: book.author)
             await MainActor.run {
-                book.summary = result.summary
-                book.paradigmShiftTitle = result.paradigmShift?.title ?? ""
-                book.paradigmShiftBefore = result.paradigmShift?.before ?? ""
-                book.paradigmShiftAfter = result.paradigmShift?.after ?? ""
+                book.summary = result.summary.isEmpty ? nil : result.summary
+                book.paradigmShiftTitle = result.paradigmShift?.title
+                book.paradigmShiftBefore = result.paradigmShift?.before
+                book.paradigmShiftAfter = result.paradigmShift?.after
                 for learning in book.learnings { context.delete(learning) }
                 book.learnings.removeAll()
                 for item in result.learnings {
