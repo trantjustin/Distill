@@ -61,9 +61,14 @@ struct LearningEntry: TimelineEntry {
     let learning: WidgetLearning?
     let configuration: DistillWidgetIntent
     let isSummaryMode: Bool
+    var hasSummary: Bool {
+        guard let s = learning?.bookSummary else { return false }
+        return !s.isEmpty
+    }
     var displayText: String? {
         guard let learning else { return nil }
-        if isSummaryMode, let summary = learning.bookSummary, !summary.isEmpty {
+        if isSummaryMode {
+            guard let summary = learning.bookSummary, !summary.isEmpty else { return nil }
             return summary
         }
         return learning.text
@@ -196,7 +201,13 @@ struct SmallWidgetView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            if let learning = entry.learning, let displayText = entry.displayText {
+            if entry.isSummaryMode && !entry.hasSummary {
+                Text("Regenerate your book in Distill to see a summary here.")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.65))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            } else if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
                     Text("SUMMARY")
                         .font(.system(size: 8, weight: .bold))
@@ -258,7 +269,13 @@ struct MediumWidgetView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            if let learning = entry.learning, let displayText = entry.displayText {
+            if entry.isSummaryMode && !entry.hasSummary {
+                Text("Regenerate your book in Distill to see a summary here.")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.65))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            } else if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
                     Text("BOOK SUMMARY")
                         .font(.system(size: 8, weight: .bold))
@@ -326,7 +343,13 @@ struct LargeWidgetView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            if let learning = entry.learning, let displayText = entry.displayText {
+            if entry.isSummaryMode && !entry.hasSummary {
+                Text("Regenerate your book in Distill to see a full summary here.")
+                    .font(.body)
+                    .foregroundStyle(.white.opacity(0.65))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            } else if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
                     Text("BOOK SUMMARY")
                         .font(.system(size: 9, weight: .bold))
