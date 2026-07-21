@@ -195,7 +195,7 @@ struct SmallWidgetView: View {
     let showTitle: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
                     Text("SUMMARY")
@@ -217,9 +217,10 @@ struct SmallWidgetView: View {
                         ? .system(size: 10, design: .serif).weight(.regular)
                         : .system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
                     .lineLimit(entry.isSummaryMode ? 9 : 6)
                     .minimumScaleFactor(0.5)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
                 if showTitle {
                     attributionText(learning: learning)
@@ -229,11 +230,12 @@ struct SmallWidgetView: View {
                 Text("Add a book in Distill to see learnings here.")
                     .font(.caption)
                     .foregroundStyle(.white.opacity(0.65))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         }
         .padding(14)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .containerBackground(for: .widget) {
             widgetBackground(dominantHex: entry.learning?.dominantColorHex, coverColor: entry.learning?.coverColor)
         }
@@ -245,6 +247,7 @@ struct SmallWidgetView: View {
             .foregroundStyle(.white.opacity(0.55))
             .lineLimit(1)
             .minimumScaleFactor(0.8)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
@@ -254,16 +257,13 @@ struct MediumWidgetView: View {
     let showAuthor: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
-                    HStack(spacing: 4) {
-                        Text("BOOK SUMMARY")
-                            .font(.system(size: 8, weight: .bold))
-                            .foregroundStyle(.white.opacity(0.5))
-                        Spacer()
-                    }
-                    .padding(.bottom, 5)
+                    Text("BOOK SUMMARY")
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .padding(.bottom, 5)
                 } else {
                     Text((learning.chapter ?? "LEARNING").uppercased())
                         .font(.system(size: 8, weight: .bold))
@@ -279,9 +279,10 @@ struct MediumWidgetView: View {
                         ? .system(size: 11, design: .serif).weight(.regular)
                         : .system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
                     .lineLimit(entry.isSummaryMode ? 9 : 6)
                     .minimumScaleFactor(0.55)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
                 attributionRow(learning: learning)
                     .padding(.top, 8)
@@ -289,11 +290,12 @@ struct MediumWidgetView: View {
                 Text("Open Distill and add a book to see learnings here.")
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.65))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         }
         .padding(14)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .containerBackground(for: .widget) {
             widgetBackground(dominantHex: entry.learning?.dominantColorHex, coverColor: entry.learning?.coverColor)
         }
@@ -313,7 +315,7 @@ struct MediumWidgetView: View {
             .foregroundStyle(.white.opacity(0.5))
             .lineLimit(1)
             .minimumScaleFactor(0.8)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
@@ -323,7 +325,7 @@ struct LargeWidgetView: View {
     let showAuthor: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             if let learning = entry.learning, let displayText = entry.displayText {
                 if entry.isSummaryMode {
                     Text("BOOK SUMMARY")
@@ -350,9 +352,10 @@ struct LargeWidgetView: View {
                         ? .system(size: 13, design: .serif).weight(.regular)
                         : .system(.body, design: .serif).weight(.semibold))
                     .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
                     .lineLimit(entry.isSummaryMode ? 18 : 12)
                     .minimumScaleFactor(0.6)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
                 if showTitle || showAuthor {
                     let attribution: String = {
@@ -368,17 +371,19 @@ struct LargeWidgetView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 10)
                 }
             } else {
                 Text("Add books in Distill to see core learnings here.")
                     .font(.title3)
                     .foregroundStyle(.white.opacity(0.65))
+                    .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         }
         .padding(20)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .containerBackground(for: .widget) {
             widgetBackground(dominantHex: entry.learning?.dominantColorHex, coverColor: entry.learning?.coverColor)
         }
