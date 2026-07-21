@@ -26,6 +26,7 @@ public struct WidgetDataManager {
     public static let appGroupID = "group.com.jtrant.distill"
     public static let learningsKey = "widget_learnings"
     public static let todayLearningKey = "widget_today_learning"
+    public static let booksKey = "widget_books"
 
     public static var sharedDefaults: UserDefaults? {
         UserDefaults(suiteName: appGroupID)
@@ -36,7 +37,25 @@ public struct WidgetDataManager {
         if let data = try? JSONEncoder().encode(learnings) {
             defaults.set(data, forKey: learningsKey)
         }
+        // Deduplicate to one representative entry per book (preserves summary)
+        var seen = Set<String>()
+        var books: [WidgetLearning] = []
+        for l in learnings {
+            if seen.insert(l.bookTitle).inserted { books.append(l) }
+        }
+        if let data = try? JSONEncoder().encode(books) {
+            defaults.set(data, forKey: booksKey)
+        }
         rotateTodayLearning(from: learnings)
+    }
+
+    public static func loadBooks() -> [WidgetLearning] {
+        guard let defaults = sharedDefaults,
+              let data = defaults.data(forKey: booksKey),
+              let books = try? JSONDecoder().decode([WidgetLearning].self, from: data) else {
+            return []
+        }
+        return books
     }
 
     public static func loadLearnings() -> [WidgetLearning] {

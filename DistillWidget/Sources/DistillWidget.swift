@@ -86,8 +86,10 @@ struct LearningProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: DistillWidgetIntent, in context: Context) async -> LearningEntry {
-        let learning = WidgetDataManager.loadTodayLearning()
         let isSummary = configuration.displayMode == .bookSummary
+        let learning = isSummary
+            ? WidgetDataManager.loadBooks().first
+            : WidgetDataManager.loadTodayLearning()
         return LearningEntry(date: Date(), learning: learning, configuration: configuration, isSummaryMode: isSummary)
     }
 
@@ -96,24 +98,18 @@ struct LearningProvider: AppIntentTimelineProvider {
         var entries: [LearningEntry] = []
         var date = Date()
 
+        let interval = configuration.refreshRate.interval
         if isSummary {
-            // One entry per book, cycling on the refresh schedule
-            let learnings = WidgetDataManager.loadLearnings()
-            var seen = Set<String>()
-            var books: [WidgetLearning] = []
-            for l in learnings {
-                if seen.insert(l.bookTitle).inserted { books.append(l) }
-            }
-            let interval = configuration.refreshRate.interval
-            let source = books.isEmpty ? learnings : books
-            for i in 0..<max(5, source.count) {
-                let learning: WidgetLearning? = source.isEmpty ? nil : source[i % source.count]
+            // Use the deduplicated per-book store so bookSummary is always populated
+            let books = WidgetDataManager.loadBooks()
+            let count = max(5, books.count)
+            for i in 0..<count {
+                let learning: WidgetLearning? = books.isEmpty ? nil : books[i % books.count]
                 entries.append(LearningEntry(date: date, learning: learning, configuration: configuration, isSummaryMode: true))
                 date = date.addingTimeInterval(interval)
             }
         } else {
             let learnings = WidgetDataManager.loadLearnings()
-            let interval = configuration.refreshRate.interval
             for i in 0..<5 {
                 let learning: WidgetLearning? = learnings.isEmpty ? nil : learnings[i % learnings.count]
                 entries.append(LearningEntry(date: date, learning: learning, configuration: configuration, isSummaryMode: false))
