@@ -11,8 +11,11 @@ final class Book {
     var dateAdded: Date
     var learnings: [Learning]
     var summary: String
+    var paradigmShiftTitle: String
+    var paradigmShiftBefore: String
+    var paradigmShiftAfter: String
 
-    init(title: String, author: String, coverColor: String = "blue", coverImageURL: String? = nil, summary: String = "") {
+    init(title: String, author: String, coverColor: String = "blue", coverImageURL: String? = nil, summary: String = "", paradigmShiftTitle: String = "", paradigmShiftBefore: String = "", paradigmShiftAfter: String = "") {
         self.id = UUID()
         self.title = title
         self.author = author
@@ -21,5 +24,8 @@ final class Book {
         self.dateAdded = Date()
         self.learnings = []
         self.summary = summary
+        self.paradigmShiftTitle = paradigmShiftTitle
+        self.paradigmShiftBefore = paradigmShiftBefore
+        self.paradigmShiftAfter = paradigmShiftAfter
     }
 }

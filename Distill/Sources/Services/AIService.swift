@@ -17,7 +17,13 @@ struct AIService {
         """
     }
 
-    func generateLearnings(for title: String, author: String) async throws -> (summary: String, learnings: [(chapter: String, text: String)]) {
+    struct ParadigmShift {
+        let title: String
+        let before: String
+        let after: String
+    }
+
+    func generateLearnings(for title: String, author: String) async throws -> (summary: String, paradigmShift: ParadigmShift?, learnings: [(chapter: String, text: String)]) {
         #if DEBUG
         let receipt = "debug_bypass"
         #else
@@ -40,7 +46,10 @@ struct AIService {
             let (data, response) = try await URLSession.shared.data(for: request)
             try self.checkHTTP(response, data: data)
             let decoded = try JSONDecoder().decode(BackendExtractResponse.self, from: data)
-            return (decoded.summary ?? "", decoded.learnings.map { ($0.chapter, $0.text) })
+            let shift: ParadigmShift? = decoded.paradigmShift.map {
+                ParadigmShift(title: $0.title, before: $0.before, after: $0.after)
+            }
+            return (decoded.summary ?? "", shift, decoded.learnings.map { ($0.chapter, $0.text) })
         }
     }
 
@@ -92,8 +101,15 @@ private struct BackendLearningItem: Decodable {
     let text: String
 }
 
+private struct BackendParadigmShift: Decodable {
+    let title: String
+    let before: String
+    let after: String
+}
+
 private struct BackendExtractResponse: Decodable {
     let summary: String?
+    let paradigmShift: BackendParadigmShift?
     let learnings: [BackendLearningItem]
 }
 

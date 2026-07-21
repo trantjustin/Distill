@@ -263,7 +263,7 @@ struct AddBookView: View {
             }
 
             await MainActor.run {
-                let book = Book(title: title, author: author, coverColor: selectedColor, coverImageURL: resolvedCover, summary: resolved.summary)
+                let book = Book(title: title, author: author, coverColor: selectedColor, coverImageURL: resolvedCover, summary: resolved.summary, paradigmShiftTitle: resolved.paradigmShift?.title ?? "", paradigmShiftBefore: resolved.paradigmShift?.before ?? "", paradigmShiftAfter: resolved.paradigmShift?.after ?? "")
                 context.insert(book)
 
                 for item in resolved.learnings {

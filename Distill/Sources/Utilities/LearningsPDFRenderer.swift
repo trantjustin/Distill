@@ -295,11 +295,68 @@ struct LearningsPDFRenderer {
                     yOffset += bodyH + 20 + 20
                 }
 
+                // MARK: Paradigm Shift card
+                func drawParadigmShift(title: String, before: String, after: String) {
+                    let cardH: CGFloat = 130
+                    checkPageBreak(neededHeight: cardH + 16)
+
+                    let cardRect = CGRect(x: margin - 12, y: yOffset, width: contentWidth + 24, height: cardH)
+                    let cardPath = UIBezierPath(roundedRect: cardRect, cornerRadius: 10)
+                    cNavy.setFill()
+                    cardPath.fill()
+
+                    let titleAttrs: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.systemFont(ofSize: 11, weight: .bold),
+                        .foregroundColor: cCyan,
+                        .kern: 1.2
+                    ]
+                    let statementAttrs: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                        .foregroundColor: UIColor.white,
+                        .paragraphStyle: ps(align: .center)
+                    ]
+                    let boldAttrs: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.systemFont(ofSize: 12, weight: .bold),
+                        .foregroundColor: UIColor.white,
+                        .paragraphStyle: ps(align: .center)
+                    ]
+                    let arrowAttrs: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.systemFont(ofSize: 14, weight: .regular),
+                        .foregroundColor: cCyan,
+                        .paragraphStyle: ps(align: .center)
+                    ]
+
+                    let titleStr = NSAttributedString(string: title.uppercased(), attributes: titleAttrs)
+                    let arrowStr = NSAttributedString(string: "↓", attributes: arrowAttrs)
+
+                    let beforeLine = NSMutableAttributedString()
+                    beforeLine.append(NSAttributedString(string: "Before: ", attributes: boldAttrs))
+                    beforeLine.append(NSAttributedString(string: "\"\(before)\"", attributes: statementAttrs))
+
+                    let afterLine = NSMutableAttributedString()
+                    afterLine.append(NSAttributedString(string: "After: ", attributes: boldAttrs))
+                    afterLine.append(NSAttributedString(string: "\"\(after)\"", attributes: statementAttrs))
+
+                    var innerY = yOffset + 18
+                    titleStr.draw(in: CGRect(x: margin, y: innerY, width: contentWidth, height: 16))
+                    innerY += 22
+                    beforeLine.draw(in: CGRect(x: margin, y: innerY, width: contentWidth, height: 18))
+                    innerY += 20
+                    arrowStr.draw(in: CGRect(x: margin, y: innerY, width: contentWidth, height: 18))
+                    innerY += 20
+                    afterLine.draw(in: CGRect(x: margin, y: innerY, width: contentWidth, height: 18))
+
+                    yOffset += cardH + 16
+                }
+
                 // MARK: Render
                 beginPage()
                 drawCover()
                 if !book.summary.isEmpty {
                     drawExecutiveOverview(book.summary)
+                }
+                if !book.paradigmShiftTitle.isEmpty {
+                    drawParadigmShift(title: book.paradigmShiftTitle, before: book.paradigmShiftBefore, after: book.paradigmShiftAfter)
                 }
                 drawSectionHeader("Chapter-by-Chapter Core Learnings")
                 for learning in learnings {
