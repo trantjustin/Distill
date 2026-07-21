@@ -320,7 +320,8 @@ struct AddBookView: View {
                     coverImageData: imageData,
                     dominantColorHex: colorHex,
                     coverColor: learning.book?.coverColor,
-                    bookSummary: learning.book?.summary
+                    bookSummary: learning.book?.summary,
+                    chapter: learning.chapter.isEmpty ? nil : learning.chapter
                 ))
             }
 

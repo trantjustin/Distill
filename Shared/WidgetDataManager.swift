@@ -9,8 +9,9 @@ public struct WidgetLearning: Codable, Sendable {
     public let dominantColorHex: String?
     public let coverColor: String?
     public let bookSummary: String?
+    public let chapter: String?
 
-    public init(text: String, bookTitle: String, bookAuthor: String, coverImageURL: String? = nil, coverImageData: Data? = nil, dominantColorHex: String? = nil, coverColor: String? = nil, bookSummary: String? = nil) {
+    public init(text: String, bookTitle: String, bookAuthor: String, coverImageURL: String? = nil, coverImageData: Data? = nil, dominantColorHex: String? = nil, coverColor: String? = nil, bookSummary: String? = nil, chapter: String? = nil) {
         self.text = text
         self.bookTitle = bookTitle
         self.bookAuthor = bookAuthor
@@ -19,6 +20,7 @@ public struct WidgetLearning: Codable, Sendable {
         self.dominantColorHex = dominantColorHex
         self.coverColor = coverColor
         self.bookSummary = bookSummary
+        self.chapter = chapter
     }
 }
 

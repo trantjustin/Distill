@@ -201,6 +201,13 @@ struct SmallWidgetView: View {
                         .font(.system(size: 8, weight: .bold))
                         .foregroundStyle(.white.opacity(0.5))
                         .padding(.bottom, 4)
+                } else if let chapter = learning.chapter {
+                    Text(chapter.uppercased())
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .padding(.bottom, 4)
                 }
                 Text(entry.isSummaryMode
                     ? truncateToCharacters(displayText, max: 220)
@@ -256,6 +263,13 @@ struct MediumWidgetView: View {
                         Spacer()
                     }
                     .padding(.bottom, 5)
+                } else if let chapter = learning.chapter {
+                    Text(chapter.uppercased())
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .padding(.bottom, 5)
                 }
                 Text(entry.isSummaryMode
                     ? truncateToCharacters(displayText, max: 380)
@@ -320,6 +334,14 @@ struct LargeWidgetView: View {
                         .font(.system(size: 48, weight: .bold))
                         .foregroundStyle(.white.opacity(0.18))
                         .padding(.bottom, -20)
+                    if let chapter = learning.chapter {
+                        Text(chapter.uppercased())
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundStyle(.white.opacity(0.5))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                            .padding(.bottom, 4)
+                    }
                 }
 
                 Text(entry.isSummaryMode

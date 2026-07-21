@@ -63,7 +63,8 @@ struct LibraryView: View {
                         coverImageData: imageData,
                         dominantColorHex: colorHex,
                         coverColor: book.coverColor,
-                        bookSummary: book.summary
+                        bookSummary: book.summary,
+                        chapter: learning.chapter.isEmpty ? nil : learning.chapter
                     ))
                 }
             }

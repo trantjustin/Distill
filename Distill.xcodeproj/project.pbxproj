@@ -696,7 +696,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DistillShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
@@ -730,7 +730,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DistillShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DistillShareExtension;
