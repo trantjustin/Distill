@@ -10,8 +10,9 @@ final class Book {
     var coverImageURL: String?
     var dateAdded: Date
     var learnings: [Learning]
+    var summary: String
 
-    init(title: String, author: String, coverColor: String = "blue", coverImageURL: String? = nil) {
+    init(title: String, author: String, coverColor: String = "blue", coverImageURL: String? = nil, summary: String = "") {
         self.id = UUID()
         self.title = title
         self.author = author
@@ -19,5 +20,6 @@ final class Book {
         self.coverImageURL = coverImageURL
         self.dateAdded = Date()
         self.learnings = []
+        self.summary = summary
     }
 }

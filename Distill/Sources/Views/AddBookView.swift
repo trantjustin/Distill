@@ -254,7 +254,7 @@ struct AddBookView: View {
                 author: bookAuthor
             )
 
-            let resolvedTexts = try await texts
+            let resolved = try await texts
             let resolvedCover: String?
             if let cover = preselectedCover {
                 resolvedCover = cover
@@ -263,10 +263,10 @@ struct AddBookView: View {
             }
 
             await MainActor.run {
-                let book = Book(title: title, author: author, coverColor: selectedColor, coverImageURL: resolvedCover)
+                let book = Book(title: title, author: author, coverColor: selectedColor, coverImageURL: resolvedCover, summary: resolved.summary)
                 context.insert(book)
 
-                for item in resolvedTexts {
+                for item in resolved.learnings {
                     let learning = Learning(text: item.text, chapter: item.chapter, bookTitle: title, bookAuthor: author)
                     learning.book = book
                     book.learnings.append(learning)

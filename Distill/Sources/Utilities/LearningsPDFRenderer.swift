@@ -252,9 +252,55 @@ struct LearningsPDFRenderer {
                     yOffset += totalCardH + 10
                 }
 
+                // MARK: Executive Overview block
+                func drawExecutiveOverview(_ text: String) {
+                    guard !text.isEmpty else { return }
+
+                    let labelAttrs: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.systemFont(ofSize: 13, weight: .bold),
+                        .foregroundColor: cCharcoal,
+                        .kern: 0.8
+                    ]
+                    let bodyAttrs: [NSAttributedString.Key: Any] = [
+                        .font: UIFont.systemFont(ofSize: 11.5, weight: .regular),
+                        .foregroundColor: cCharcoal,
+                        .paragraphStyle: ps(lineSpacing: 4)
+                    ]
+
+                    let labelStr = NSAttributedString(string: "EXECUTIVE OVERVIEW", attributes: labelAttrs)
+                    let bodyStr = NSAttributedString(string: text, attributes: bodyAttrs)
+
+                    let labelH = textHeight(labelStr, width: contentWidth - 16) + 16
+                    let bodyH = textHeight(bodyStr, width: contentWidth - 28) + 8
+                    let totalH = labelH + bodyH + 28
+
+                    checkPageBreak(neededHeight: totalH)
+
+                    // Left blue accent bar for header
+                    cBlue.setFill()
+                    UIRectFill(CGRect(x: margin - 12, y: yOffset, width: 4, height: labelH))
+                    labelStr.draw(in: CGRect(x: margin, y: yOffset + 8, width: contentWidth - 16, height: labelH))
+                    yOffset += labelH + 8
+
+                    // Overview card
+                    let cardRect = CGRect(x: margin - 12, y: yOffset, width: contentWidth + 24, height: bodyH + 20)
+                    let cardPath = UIBezierPath(roundedRect: cardRect, cornerRadius: 8)
+                    UIColor.white.setFill()
+                    cardPath.fill()
+                    cCardBorder.setStroke()
+                    cardPath.lineWidth = 0.8
+                    cardPath.stroke()
+
+                    bodyStr.draw(in: CGRect(x: margin, y: yOffset + 10, width: contentWidth - 4, height: bodyH + 4))
+                    yOffset += bodyH + 20 + 20
+                }
+
                 // MARK: Render
                 beginPage()
                 drawCover()
+                if !book.summary.isEmpty {
+                    drawExecutiveOverview(book.summary)
+                }
                 drawSectionHeader("Chapter-by-Chapter Core Learnings")
                 for learning in learnings {
                     drawLearning(learning)

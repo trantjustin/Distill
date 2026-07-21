@@ -150,11 +150,12 @@ struct BookDetailView: View {
         isRegenerating = true
         defer { isRegenerating = false }
         do {
-            let texts = try await AIService.shared.generateLearnings(for: book.title, author: book.author)
+            let result = try await AIService.shared.generateLearnings(for: book.title, author: book.author)
             await MainActor.run {
+                book.summary = result.summary
                 for learning in book.learnings { context.delete(learning) }
                 book.learnings.removeAll()
-                for item in texts {
+                for item in result.learnings {
                     let learning = Learning(text: item.text, chapter: item.chapter, bookTitle: book.title, bookAuthor: book.author)
                     learning.book = book
                     book.learnings.append(learning)

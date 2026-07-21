@@ -17,7 +17,7 @@ struct AIService {
         """
     }
 
-    func generateLearnings(for title: String, author: String) async throws -> [(chapter: String, text: String)] {
+    func generateLearnings(for title: String, author: String) async throws -> (summary: String, learnings: [(chapter: String, text: String)]) {
         #if DEBUG
         let receipt = "debug_bypass"
         #else
@@ -40,7 +40,7 @@ struct AIService {
             let (data, response) = try await URLSession.shared.data(for: request)
             try self.checkHTTP(response, data: data)
             let decoded = try JSONDecoder().decode(BackendExtractResponse.self, from: data)
-            return decoded.learnings.map { ($0.chapter, $0.text) }
+            return (decoded.summary ?? "", decoded.learnings.map { ($0.chapter, $0.text) })
         }
     }
 
@@ -93,6 +93,7 @@ private struct BackendLearningItem: Decodable {
 }
 
 private struct BackendExtractResponse: Decodable {
+    let summary: String?
     let learnings: [BackendLearningItem]
 }
 
