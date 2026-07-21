@@ -58,7 +58,7 @@ struct SettingsView: View {
                     Text("Subscription is anonymous — no account required. Auto-renews monthly until cancelled.")
                 }
 
-                Section("Widget") {
+                Section {
                     HStack {
                         Image(systemName: "square.grid.2x2.fill")
                             .foregroundStyle(.indigo)
@@ -79,6 +79,8 @@ struct SettingsView: View {
                         WidgetDataManager.saveDisplayMode(newValue)
                         WidgetCenter.shared.reloadAllTimelines()
                     }
+                } header: {
+                    Text("Widget")
                 } footer: {
                     Text("Book Summary shows the full overview of each book, cycling through your library.")
                 }
