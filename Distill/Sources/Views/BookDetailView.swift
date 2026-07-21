@@ -202,7 +202,7 @@ struct BookDetailView: View {
         let descriptor = FetchDescriptor<Learning>()
         guard let allLearnings = try? context.fetch(descriptor) else { return }
         let widgetLearnings = allLearnings.map {
-            WidgetLearning(text: $0.text, bookTitle: $0.bookTitle, bookAuthor: $0.bookAuthor)
+            WidgetLearning(text: $0.text, bookTitle: $0.bookTitle, bookAuthor: $0.bookAuthor, bookSummary: $0.book?.summary)
         }
         WidgetDataManager.saveLearnings(widgetLearnings)
         WidgetCenter.shared.reloadAllTimelines()

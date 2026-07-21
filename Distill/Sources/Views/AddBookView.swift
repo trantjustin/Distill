@@ -319,7 +319,8 @@ struct AddBookView: View {
                     coverImageURL: urlString,
                     coverImageData: imageData,
                     dominantColorHex: colorHex,
-                    coverColor: learning.book?.coverColor
+                    coverColor: learning.book?.coverColor,
+                    bookSummary: learning.book?.summary
                 ))
             }
 

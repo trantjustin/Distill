@@ -26,9 +26,23 @@ enum WidgetRefreshRate: String, AppEnum {
     }
 }
 
+enum WidgetDisplayMode: String, AppEnum {
+    case rotateLearnings = "rotateLearnings"
+    case bookSummary = "bookSummary"
+
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Display Mode"
+    static var caseDisplayRepresentations: [WidgetDisplayMode: DisplayRepresentation] = [
+        .rotateLearnings: DisplayRepresentation(title: "Rotate Learnings"),
+        .bookSummary:     DisplayRepresentation(title: "Book Summary"),
+    ]
+}
+
 struct DistillWidgetIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Distill Widget"
     static var description = IntentDescription("Customize your Distill widget.")
+
+    @Parameter(title: "Display Mode", default: .rotateLearnings)
+    var displayMode: WidgetDisplayMode
 
     @Parameter(title: "Refresh Rate", default: .frequent)
     var refreshRate: WidgetRefreshRate
@@ -46,6 +60,14 @@ struct LearningEntry: TimelineEntry {
     let date: Date
     let learning: WidgetLearning?
     let configuration: DistillWidgetIntent
+    let isSummaryMode: Bool
+    var displayText: String? {
+        guard let learning else { return nil }
+        if isSummaryMode, let summary = learning.bookSummary, !summary.isEmpty {
+            return summary
+        }
+        return learning.text
+    }
 }
 
 struct LearningProvider: AppIntentTimelineProvider {
@@ -55,27 +77,48 @@ struct LearningProvider: AppIntentTimelineProvider {
             learning: WidgetLearning(
                 text: "Habits are the compound interest of self-improvement.",
                 bookTitle: "Atomic Habits",
-                bookAuthor: "James Clear"
+                bookAuthor: "James Clear",
+                bookSummary: "Atomic Habits argues that tiny 1% improvements compound into remarkable results over time. The book introduces the Four Laws of Behavior Change as a framework for building good habits and breaking bad ones. By focusing on systems rather than goals, readers transform their identity and achieve lasting change."
             ),
-            configuration: DistillWidgetIntent()
+            configuration: DistillWidgetIntent(),
+            isSummaryMode: false
         )
     }
 
     func snapshot(for configuration: DistillWidgetIntent, in context: Context) async -> LearningEntry {
         let learning = WidgetDataManager.loadTodayLearning()
-        return LearningEntry(date: Date(), learning: learning, configuration: configuration)
+        let isSummary = configuration.displayMode == .bookSummary
+        return LearningEntry(date: Date(), learning: learning, configuration: configuration, isSummaryMode: isSummary)
     }
 
     func timeline(for configuration: DistillWidgetIntent, in context: Context) async -> Timeline<LearningEntry> {
-        let learnings = WidgetDataManager.loadLearnings()
+        let isSummary = configuration.displayMode == .bookSummary
         var entries: [LearningEntry] = []
         var date = Date()
-        let interval = configuration.refreshRate.interval
 
-        for i in 0..<5 {
-            let learning: WidgetLearning? = learnings.isEmpty ? nil : learnings[i % learnings.count]
-            entries.append(LearningEntry(date: date, learning: learning, configuration: configuration))
-            date = date.addingTimeInterval(interval)
+        if isSummary {
+            // One entry per book, cycling on the refresh schedule
+            let learnings = WidgetDataManager.loadLearnings()
+            var seen = Set<String>()
+            var books: [WidgetLearning] = []
+            for l in learnings {
+                if seen.insert(l.bookTitle).inserted { books.append(l) }
+            }
+            let interval = configuration.refreshRate.interval
+            let source = books.isEmpty ? learnings : books
+            for i in 0..<max(5, source.count) {
+                let learning: WidgetLearning? = source.isEmpty ? nil : source[i % source.count]
+                entries.append(LearningEntry(date: date, learning: learning, configuration: configuration, isSummaryMode: true))
+                date = date.addingTimeInterval(interval)
+            }
+        } else {
+            let learnings = WidgetDataManager.loadLearnings()
+            let interval = configuration.refreshRate.interval
+            for i in 0..<5 {
+                let learning: WidgetLearning? = learnings.isEmpty ? nil : learnings[i % learnings.count]
+                entries.append(LearningEntry(date: date, learning: learning, configuration: configuration, isSummaryMode: false))
+                date = date.addingTimeInterval(interval)
+            }
         }
 
         return Timeline(entries: entries, policy: .atEnd)
@@ -157,8 +200,14 @@ struct SmallWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if let learning = entry.learning {
-                Text(truncateToSentences(learning.text, maxSentences: 1))
+            if let learning = entry.learning, let displayText = entry.displayText {
+                if entry.isSummaryMode {
+                    Text("SUMMARY")
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .padding(.bottom, 4)
+                }
+                Text(truncateToSentences(displayText, maxSentences: entry.isSummaryMode ? 3 : 1))
                     .font(.system(.caption, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
                     .lineLimit(6)
@@ -199,8 +248,17 @@ struct MediumWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if let learning = entry.learning {
-                Text(truncateToSentences(learning.text, maxSentences: 2))
+            if let learning = entry.learning, let displayText = entry.displayText {
+                if entry.isSummaryMode {
+                    HStack(spacing: 4) {
+                        Text("BOOK SUMMARY")
+                            .font(.system(size: 8, weight: .bold))
+                            .foregroundStyle(.white.opacity(0.5))
+                        Spacer()
+                    }
+                    .padding(.bottom, 5)
+                }
+                Text(truncateToSentences(displayText, maxSentences: entry.isSummaryMode ? 4 : 2))
                     .font(.system(.subheadline, design: .serif).weight(.medium))
                     .foregroundStyle(.white)
                     .lineLimit(6)
@@ -248,14 +306,21 @@ struct LargeWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if let learning = entry.learning {
-                Text("\u{201C}")
-                    .font(.system(size: 48, weight: .bold))
-                    .foregroundStyle(.white.opacity(0.18))
-                    .padding(.bottom, -20)
+            if let learning = entry.learning, let displayText = entry.displayText {
+                if entry.isSummaryMode {
+                    Text("BOOK SUMMARY")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.5))
+                        .padding(.bottom, 6)
+                } else {
+                    Text("\u{201C}")
+                        .font(.system(size: 48, weight: .bold))
+                        .foregroundStyle(.white.opacity(0.18))
+                        .padding(.bottom, -20)
+                }
 
-                Text(truncateToSentences(learning.text, maxSentences: 4))
-                    .font(.system(.body, design: .serif).weight(.semibold))
+                Text(entry.isSummaryMode ? displayText : truncateToSentences(displayText, maxSentences: 4))
+                    .font(.system(.body, design: .serif).weight(entry.isSummaryMode ? .regular : .semibold))
                     .foregroundStyle(.white)
                     .lineLimit(12)
                     .minimumScaleFactor(0.65)
